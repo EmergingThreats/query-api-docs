@@ -142,6 +142,42 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tr>
 </tbody></table>
 
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>submit_date</td>
+<td>No</td>
+<td>The date and time the malware was originally submitted to Emerging Threats; format is yyyy-MM-dd HH:mm:ss</td>
+</tr>
+<tr>
+<td>file_type</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>file_size</td>
+<td>Yes</td>
+<td>The size of the binary in bytes.</td>
+</tr>
+<tr>
+<td>sha256</td>
+<td>Yes</td>
+<td>The SHA-256 hash of the binary.</td>
+</tr>
+<tr>
+<td>ssdeep</td>
+<td>Yes</td>
+<td></td>
+</tr>
+</tbody></table>
+
 <h2 id="get-sample-connections">Get sample connections</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/connections"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
@@ -209,6 +245,411 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tr>
 </tbody></table>
 
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>No</td>
+<td>The source of the connection.</td>
+</tr>
+<tr>
+<td>date</td>
+<td>No</td>
+<td>The date the connection was observed.</td>
+</tr>
+<tr>
+<td>source_ip</td>
+<td>No</td>
+<td>The source IP of the traffic associated with the connection.</td>
+</tr>
+<tr>
+<td>destination_ip</td>
+<td>No</td>
+<td>The destination IP of the traffic associated with the connection.</td>
+</tr>
+<tr>
+<td>source_port</td>
+<td>No</td>
+<td>The source port of the traffic associated with the connection.</td>
+</tr>
+<tr>
+<td>destination_port</td>
+<td>No</td>
+<td>The destination port of the traffic associated with the connection.</td>
+</tr>
+<tr>
+<td>bytes_down</td>
+<td>Yes</td>
+<td>The total number of bytes downloaded via this connection.</td>
+</tr>
+<tr>
+<td>bytes_up</td>
+<td>Yes</td>
+<td>The total number of bytes uploaded via this connection.</td>
+</tr>
+<tr>
+<td>bytes_total</td>
+<td>Yes</td>
+<td>The total number of bytes transmitted via this connection.</td>
+</tr>
+<tr>
+<td>packets_down</td>
+<td>Yes</td>
+<td>The total number of packets downloaded via this connection.</td>
+</tr>
+<tr>
+<td>packets_up</td>
+<td>Yes</td>
+<td>The total number of packets uploaded via this connection.</td>
+</tr>
+<tr>
+<td>packets_total</td>
+<td>Yes</td>
+<td>The total number of packets transmitted via this connection.</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>Yes</td>
+<td>The communication protocol associated with this connection (e.g. tcp, udp).</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-sample-dns-lookups">Get sample dns lookups</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/dns"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"177f3c8a2623d4efb41b0020d680be83"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"partirenimmobilier.fr"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"record_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"177f3c8a2623d4efb41b0020d680be83"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"www.fredianipueyrredon.com.ar"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"record_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent dns lookups an individual malware sample was observed to have made.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/dns</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>md5</td>
+<td>None</td>
+<td>The md5sum of the malware sample whose dns lookups are to be retrieved.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>No</td>
+<td>The source of the dns lookup.</td>
+</tr>
+<tr>
+<td>date</td>
+<td>No</td>
+<td>The date the lookup was observed.</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>No</td>
+<td>The domain whose DNS record was being queried.</td>
+</tr>
+<tr>
+<td>answer</td>
+<td>Yes</td>
+<td>If the DNS response was not an A record pointing to an IP, this field will contain the DNS query response (e.g. the CNAME).</td>
+</tr>
+<tr>
+<td>destination_ip</td>
+<td>Yes</td>
+<td>If the DNS response was an A record pointing to an IP, this field will contain the IP in question.</td>
+</tr>
+<tr>
+<td>record_type</td>
+<td>Yes</td>
+<td>The DNS record type (e.g. A, CNAME, etc.)</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-sample-http-requests">Get sample http requests</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/http"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"177f3c8a2623d4efb41b0020d680be83"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vicaire.fr"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.102"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49367</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/images/1/filenames.php"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"177f3c8a2623d4efb41b0020d680be83"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"www.danielalmeida.adv.br"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.102"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49351</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/images/1/filenames.php"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent http requests an individual malware sample was observed to have made.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/http</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>md5</td>
+<td>None</td>
+<td>The md5sum of the malware sample whose http requests are to be retrieved.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>No</td>
+<td>The source of the http request.</td>
+</tr>
+<tr>
+<td>date</td>
+<td>No</td>
+<td>The date the request was observed.</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>No</td>
+<td>The domain the request was destined for.</td>
+</tr>
+<tr>
+<td>source_ip</td>
+<td>No</td>
+<td>The source IP of the http request.</td>
+</tr>
+<tr>
+<td>destination_ip</td>
+<td>No</td>
+<td>The IP the request was destined for.</td>
+</tr>
+<tr>
+<td>source_port</td>
+<td>No</td>
+<td>The source port of the traffic associated with the request.</td>
+</tr>
+<tr>
+<td>destination_port</td>
+<td>No</td>
+<td>The port the request was destined for.</td>
+</tr>
+<tr>
+<td>method</td>
+<td>Yes</td>
+<td>The HTTP method used in the request.</td>
+</tr>
+<tr>
+<td>url</td>
+<td>Yes</td>
+<td>The URL requested.</td>
+</tr>
+<tr>
+<td>user_agent</td>
+<td>Yes</td>
+<td>The user agent string associated with the request.</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-sample-ids-events">Get sample IDS events</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/events"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"177f3c8a2623d4efb41b0020d680be83"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="mi">2010228</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.102"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49191</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"revision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"signature_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ET POLICY Suspicious Microsoft Windows NT 6.1 User-Agent Detected"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"177f3c8a2623d4efb41b0020d680be83"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-03-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="mi">2001117</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.104"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"destination_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">51394</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"revision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"signature_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ET DNS Standard query response, Name Error"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent IDS events an individual malware sample was observed to have triggered.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/events</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>md5</td>
+<td>None</td>
+<td>The md5sum of the malware sample whose IDS events are to be retrieved.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>No</td>
+<td>The source of the event.</td>
+</tr>
+<tr>
+<td>date</td>
+<td>No</td>
+<td>The date the event was observed.</td>
+</tr>
+<tr>
+<td>sid</td>
+<td>No</td>
+<td>The SID associated with the event.</td>
+</tr>
+<tr>
+<td>source_ip</td>
+<td>No</td>
+<td>The source IP of the traffic associated with the event.</td>
+</tr>
+<tr>
+<td>destination_ip</td>
+<td>No</td>
+<td>The destination IP of the traffic associated with the event.</td>
+</tr>
+<tr>
+<td>source_port</td>
+<td>No</td>
+<td>The source port of the traffic associated with the event.</td>
+</tr>
+<tr>
+<td>destination_port</td>
+<td>No</td>
+<td>The destination port of the traffic associated with the event.</td>
+</tr>
+<tr>
+<td>revision</td>
+<td>Yes</td>
+<td>The rule revision of the SID in question.</td>
+</tr>
+<tr>
+<td>signature_name</td>
+<td>Yes</td>
+<td>The name of the signature associated with this SID.</td>
+</tr>
+</tbody></table>
+
 <h1 id="whois-info">Whois Info</h1>
 
 <h2 id="get-domain-whois-info">Get Domain Whois Info</h2>
@@ -228,7 +669,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
       </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"domains@microsoft.com"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1996-01-29"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-11-29"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"expired"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-30"</span><span class="w">
+      </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-30"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"registrar"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MarkMonitor Inc."</span><span class="p">,</span><span class="w">
@@ -258,6 +699,62 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <td>domain</td>
 <td>None</td>
 <td>The domain of the whois info to be retrieved.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>No</td>
+<td>The domain associated with the whois record.</td>
+</tr>
+<tr>
+<td>registrant.name</td>
+<td>Yes</td>
+<td>Name of the domain registrant.</td>
+</tr>
+<tr>
+<td>registrant.email</td>
+<td>Yes</td>
+<td>Email address of the domain registrant.</td>
+</tr>
+<tr>
+<td>registrant.created</td>
+<td>Yes</td>
+<td>Date the whois record was originally created.</td>
+</tr>
+<tr>
+<td>registrant.updated</td>
+<td>Yes</td>
+<td>Date the whois record was last updated.</td>
+</tr>
+<tr>
+<td>registrant.expires</td>
+<td>Yes</td>
+<td>Date the whois record will expire.</td>
+</tr>
+<tr>
+<td>registrar.name</td>
+<td>Yes</td>
+<td>Name of the domain registrar.</td>
+</tr>
+<tr>
+<td>registrar.country</td>
+<td>Yes</td>
+<td>Home country of the domain registrar.</td>
+</tr>
+<tr>
+<td>registrar.website</td>
+<td>Yes</td>
+<td>Homepage for the domain registrar.</td>
 </tr>
 </tbody></table>
 
