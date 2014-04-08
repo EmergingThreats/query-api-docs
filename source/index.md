@@ -2,12 +2,9 @@
 title: API Reference
 
 language_tabs:
-  - shell
-  - ruby
-  - python
+  - curl
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -17,151 +14,170 @@ includes:
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+The IQRisk Query API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 100 million malware samples.
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+We currently have code examples using curl, and are working on other language examples. If you have a particular language you'd like to see API examples for, please let us know. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-```
+> To authenticate, use this code:
 
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: SECRETKEY"
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `SECRETKEY` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Emerging Threats uses API keys to allow access to our API. If your company has paid for API access, you can find your API key by visiting [https://portal.emergingthreats.net/api-access](https://portal.emergingthreats.net/api-access).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+The Query API expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+`Authorization: SECRETKEY`
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+You must replace `SECRETKEY` with your personal API key.
 </aside>
 
-# Kittens
 
-## Get All Kittens
+# Malware Samples
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Get sample details
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.emergingthreats.net/v1/samples/<md5>"
+  -H "Authorization: SECRETKEY"
 ```
 
-> The above command returns JSON structured like this:
+> The JSON response should look something like:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+{
+  "success": true,
+  "response": {
+    "submit_date": "2012-06-11 04:00:00",
+    "file_type": "PE32 executable for MS Windows (DLL) (console) Intel 80386 32-bit",
+    "file_size": 69459,
+    "sha256": "e12012672d33cbcb22cf953ff787af250f8f5e920c565f03d4496a619c13a889",
+    "ssdeep": "12288:ANkX6n+UtdHEhnLaoO2Ze9c+pq2NmUR0SEDRqHW2BUddM5d0HWO2QIbQ:8kX6n+uuNWoO2497p/NmURUyUddM5d0x"
   }
-]
+}
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves metadata information for a single malware sample.
 
 ### HTTP Request
 
-`GET http://example.com/kittens`
+`GET https://api.emergingthreats.net/v1/samples/<md5>`
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+md5 | None | The md5sum of the malware sample to be retrieved.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## Get sample connections
 
 ```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.emergingthreats.net/v1/samples/<md5>/connections"
+  -H "Authorization: SECRETKEY"
 ```
 
-> The above command returns JSON structured like this:
+> The JSON response should look something like:
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "success": true,
+  "response": [
+    {
+      "source": "177f3c8a2623d4efb41b0020d680be83",
+      "date": "2014-03-31",
+      "source_ip": "10.10.10.104",
+      "destination_ip": "178.254.11.36",
+      "source_port": 49382,
+      "destination_port": 80,
+      "bytes_down": 508,
+      "bytes_up": 306,
+      "bytes_total": 814,
+      "packets_down": 4,
+      "packets_up": 6,
+      "packets_total": 10,
+      "protocol": "tcp"
+    },
+    {
+      "source": "177f3c8a2623d4efb41b0020d680be83",
+      "date": "2014-03-31",
+      "source_ip": "10.10.10.104",
+      "destination_ip": "208.117.232.117",
+      "source_port": 49381,
+      "destination_port": 80,
+      "bytes_down": 0,
+      "bytes_up": 0,
+      "bytes_total": 0,
+      "packets_down": 2,
+      "packets_up": 4,
+      "packets_total": 6,
+      "protocol": "tcp"
+    }
+  ]
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+This endpoint retrieves the most recent connections an individual malware sample was observed to have made.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET https://api.emergingthreats.net/v1/samples/<md5>/connections`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the cat to retrieve
+Parameter | Default | Description
+--------- | ------- | -----------
+md5 | None | The md5sum of the malware sample whose connections are to be retrieved.
 
+# Whois Info
+
+## Get Domain Whois Info
+
+```shell
+curl "https://api.emergingthreats.net/v1/whois-info/bing.com"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": {
+    "domain": "bing.com",
+    "registrant": {
+      "name": "Microsoft Corporation",
+      "email": "domains@microsoft.com",
+      "created": "1996-01-29",
+      "updated": "2012-11-29",
+      "expired": "2019-01-30"
+    },
+    "registrar": {
+      "name": "MarkMonitor Inc.",
+      "country": "USA",
+      "website": "http://www.markmonitor.com"
+    }
+  }
+}
+```
+
+This endpoint retrieves whois info for a single domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/whois-info/<domain>`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+domain | None | The domain of the whois info to be retrieved.
