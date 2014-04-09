@@ -25,6 +25,8 @@ includes:
 
 /v1/domains/{domain}/ips
 
+/v1/domains/{domain}/events
+
 /v1/domains/{domain}/reputation
 
 /v1/domains/{domain}/nameservers
@@ -110,6 +112,13 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/samples"
 
 ```shell
 curl "https://api.emergingthreats.net/v1/domains/{domain}/ips"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get domain related IDS events
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/events"
   -H "Authorization: SECRETKEY"
 ```
 
