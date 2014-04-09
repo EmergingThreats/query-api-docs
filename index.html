@@ -79,6 +79,8 @@
 
 /v1/domains/{domain}/ips
 
+/v1/domains/{domain}/events
+
 /v1/domains/{domain}/reputation
 
 /v1/domains/{domain}/nameservers
@@ -157,6 +159,11 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h2 id="get-domain-related-ips">Get domain related IPs</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/ips"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-domain-related-ids-events">Get domain related IDS events</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/events"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
