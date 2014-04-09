@@ -81,8 +81,6 @@
 
 /v1/domains/{domain}/reputation
 
-/v1/domains/{domain}/rephistory
-
 /v1/domains/{domain}/nameservers
 
 /v1/domains/{domain}/whois
@@ -98,8 +96,6 @@
 /v1/ips/{ip}/events
 
 /v1/ips/{ip}/reputation
-
-/v1/ips/{ip}/rephistory
 
 /v1/samples/{md5}
 
@@ -166,11 +162,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h2 id="get-domain-reputation">Get domain reputation</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
-</pre>
-
-<h2 id="get-historical-domain-reputation">Get historical domain reputation</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/rephistory"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
@@ -314,11 +305,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h2 id="get-ip-reputation">Get IP reputation</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/reputation"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
-</pre>
-
-<h2 id="get-historical-ip-reputation">Get historical IP reputation</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/rephistory"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
