@@ -256,8 +256,7 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}"
     "submit_date": "2012-06-11 04:00:00",
     "file_type": "PE32 executable for MS Windows (DLL) (console) Intel 80386 32-bit",
     "file_size": 69459,
-    "sha256": "e12012672d33cbcb22cf953ff787af250f8f5e920c565f03d4496a619c13a889",
-    "ssdeep": "12288:ANkX6n+UtdHEhnLaoO2Ze9c+pq2NmUR0SEDRqHW2BUddM5d0HWO2QIbQ:8kX6n+uuNWoO2497p/NmURUyUddM5d0x"
+    "sha256": "e12012672d33cbcb22cf953ff787af250f8f5e920c565f03d4496a619c13a889"
   }
 }
 ```
@@ -282,7 +281,6 @@ submit_date | No | The date and time the malware was originally submitted to Eme
 file_type | Yes | 
 file_size | Yes | The size of the binary in bytes.
 sha256 | Yes | The SHA-256 hash of the binary.
-ssdeep | Yes | 
 
 ## Get sample connections
 
