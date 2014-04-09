@@ -14,6 +14,50 @@ includes:
 
 # Introduction
 
+> Summary of Resource URL Patterns
+
+```plaintext
+/v1/domains/{domain}
+
+/v1/domains/{domain}/urls
+
+/v1/domains/{domain}/samples
+
+/v1/domains/{domain}/ips
+
+/v1/domains/{domain}/reputation
+
+/v1/domains/{domain}/rephistory
+
+/v1/domains/{domain}/nameservers
+
+/v1/domains/{domain}/whois
+
+/v1/ips/{ip}
+
+/v1/ips/{ip}/urls
+
+/v1/ips/{ip}/samples
+
+/v1/ips/{ip}/domains
+
+/v1/ips/{ip}/events
+
+/v1/ips/{ip}/reputation
+
+/v1/ips/{ip}/rephistory
+
+/v1/samples/{md5}
+
+/v1/samples/{md5}/connections
+
+/v1/samples/{md5}/dns
+
+/v1/samples/{md5}/http
+
+/v1/samples/{md5}/events
+```
+
 The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.
 
 The IQRisk Query API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 100 million malware samples.
@@ -43,12 +87,172 @@ You must replace `SECRETKEY` with your personal API key.
 </aside>
 
 
+# Domain Information
+
+## Get domain info
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get domain malware-requested URLs
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/urls"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get domain related malware samples
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/samples"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get domain related IPs
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/ips"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get domain reputation
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/reputation"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get historical domain reputation
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/rephistory"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get domain nameserver info
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/nameservers"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get domain whois info
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/whois"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": {
+    "domain": "bing.com",
+    "registrant": {
+      "name": "Microsoft Corporation",
+      "email": "domains@microsoft.com",
+      "created": "1996-01-29",
+      "updated": "2012-11-29",
+      "expires": "2019-01-30"
+    },
+    "registrar": {
+      "name": "MarkMonitor Inc.",
+      "country": "USA",
+      "website": "http://www.markmonitor.com"
+    }
+  }
+}
+```
+
+This endpoint retrieves whois info for a single domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/{domain}/whois`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+domain | None | The domain of the whois info to be retrieved.
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+domain | No | The domain associated with the whois record.
+registrant.name | Yes | Name of the domain registrant.
+registrant.email | Yes | Email address of the domain registrant.
+registrant.created | Yes | Date the whois record was originally created.
+registrant.updated | Yes | Date the whois record was last updated.
+registrant.expires | Yes | Date the whois record will expire.
+registrar.name | Yes | Name of the domain registrar.
+registrar.country | Yes | Home country of the domain registrar.
+registrar.website | Yes | Homepage for the domain registrar.
+
+
+# IP Information
+
+## Get IP info
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get IP malware-requested URLs
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/urls"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get IP related malware samples
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/samples"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get IP related domains
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/domains"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get IP related IDS events
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/events"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get IP reputation
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
+  -H "Authorization: SECRETKEY"
+```
+
+## Get historical IP reputation
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/rephistory"
+  -H "Authorization: SECRETKEY"
+```
+
+
 # Malware Samples
 
 ## Get sample details
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/<md5>"
+curl "https://api.emergingthreats.net/v1/samples/{md5}"
   -H "Authorization: SECRETKEY"
 ```
 
@@ -71,7 +275,7 @@ This endpoint retrieves metadata information for a single malware sample.
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/<md5>`
+`GET https://api.emergingthreats.net/v1/samples/{md5}`
 
 ### Query Parameters
 
@@ -92,7 +296,7 @@ ssdeep | Yes |
 ## Get sample connections
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/<md5>/connections"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/connections"
   -H "Authorization: SECRETKEY"
 ```
 
@@ -140,7 +344,7 @@ This endpoint retrieves the most recent connections an individual malware sample
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/<md5>/connections`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/connections`
 
 ### Query Parameters
 
@@ -169,7 +373,7 @@ protocol | Yes | The communication protocol associated with this connection (e.g
 ## Get sample dns lookups
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/<md5>/dns"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/dns"
   -H "Authorization: SECRETKEY"
 ```
 
@@ -201,7 +405,7 @@ This endpoint retrieves the most recent dns lookups an individual malware sample
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/<md5>/dns`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/dns`
 
 ### Query Parameters
 
@@ -223,7 +427,7 @@ record_type | Yes | The DNS record type (e.g. A, CNAME, etc.)
 ## Get sample http requests
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/<md5>/http"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/http"
   -H "Authorization: SECRETKEY"
 ```
 
@@ -265,7 +469,7 @@ This endpoint retrieves the most recent http requests an individual malware samp
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/<md5>/http`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/http`
 
 ### Query Parameters
 
@@ -291,7 +495,7 @@ user_agent | Yes | The user agent string associated with the request.
 ## Get sample IDS events
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/<md5>/events"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/events"
   -H "Authorization: SECRETKEY"
 ```
 
@@ -331,7 +535,7 @@ This endpoint retrieves the most recent IDS events an individual malware sample 
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/<md5>/events`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/events`
 
 ### Query Parameters
 
@@ -352,61 +556,3 @@ source_port | No | The source port of the traffic associated with the event.
 destination_port | No | The destination port of the traffic associated with the event.
 revision | Yes | The rule revision of the SID in question.
 signature_name | Yes | The name of the signature associated with this SID.
-
-# Whois Info
-
-## Get Domain Whois Info
-
-```shell
-curl "https://api.emergingthreats.net/v1/whois-info/bing.com"
-  -H "Authorization: SECRETKEY"
-```
-
-> The JSON response should look something like:
-
-```json
-{
-  "success": true,
-  "response": {
-    "domain": "bing.com",
-    "registrant": {
-      "name": "Microsoft Corporation",
-      "email": "domains@microsoft.com",
-      "created": "1996-01-29",
-      "updated": "2012-11-29",
-      "expires": "2019-01-30"
-    },
-    "registrar": {
-      "name": "MarkMonitor Inc.",
-      "country": "USA",
-      "website": "http://www.markmonitor.com"
-    }
-  }
-}
-```
-
-This endpoint retrieves whois info for a single domain.
-
-### HTTP Request
-
-`GET https://api.emergingthreats.net/v1/whois-info/<domain>`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-domain | None | The domain of the whois info to be retrieved.
-
-### Response Parameters
-
-Parameter | Optional? | Description
---------- | --------- | -----------
-domain | No | The domain associated with the whois record.
-registrant.name | Yes | Name of the domain registrant.
-registrant.email | Yes | Email address of the domain registrant.
-registrant.created | Yes | Date the whois record was originally created.
-registrant.updated | Yes | Date the whois record was last updated.
-registrant.expires | Yes | Date the whois record will expire.
-registrar.name | Yes | Name of the domain registrar.
-registrar.country | Yes | Home country of the domain registrar.
-registrar.website | Yes | Homepage for the domain registrar.
