@@ -27,8 +27,6 @@ includes:
 
 /v1/domains/{domain}/reputation
 
-/v1/domains/{domain}/rephistory
-
 /v1/domains/{domain}/nameservers
 
 /v1/domains/{domain}/whois
@@ -44,8 +42,6 @@ includes:
 /v1/ips/{ip}/events
 
 /v1/ips/{ip}/reputation
-
-/v1/ips/{ip}/rephistory
 
 /v1/samples/{md5}
 
@@ -121,13 +117,6 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/ips"
 
 ```shell
 curl "https://api.emergingthreats.net/v1/domains/{domain}/reputation"
-  -H "Authorization: SECRETKEY"
-```
-
-## Get historical domain reputation
-
-```shell
-curl "https://api.emergingthreats.net/v1/domains/{domain}/rephistory"
   -H "Authorization: SECRETKEY"
 ```
 
@@ -236,13 +225,6 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/events"
 
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
-  -H "Authorization: SECRETKEY"
-```
-
-## Get historical IP reputation
-
-```shell
-curl "https://api.emergingthreats.net/v1/ips/{ip}/rephistory"
   -H "Authorization: SECRETKEY"
 ```
 
