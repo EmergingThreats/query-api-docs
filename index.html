@@ -68,6 +68,50 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
+<blockquote>
+<p>Summary of Resource URL Patterns</p>
+</blockquote>
+<pre class="highlight plaintext">/v1/domains/{domain}
+
+/v1/domains/{domain}/urls
+
+/v1/domains/{domain}/samples
+
+/v1/domains/{domain}/ips
+
+/v1/domains/{domain}/reputation
+
+/v1/domains/{domain}/rephistory
+
+/v1/domains/{domain}/nameservers
+
+/v1/domains/{domain}/whois
+
+/v1/ips/{ip}
+
+/v1/ips/{ip}/urls
+
+/v1/ips/{ip}/samples
+
+/v1/ips/{ip}/domains
+
+/v1/ips/{ip}/events
+
+/v1/ips/{ip}/reputation
+
+/v1/ips/{ip}/rephistory
+
+/v1/samples/{md5}
+
+/v1/samples/{md5}/connections
+
+/v1/samples/{md5}/dns
+
+/v1/samples/{md5}/http
+
+/v1/samples/{md5}/events
+</pre>
+
 <p>The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.</p>
 
 <p>The IQRisk Query API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 100 million malware samples.</p>
@@ -98,10 +142,190 @@ curl <span class="s2">"api_endpoint_here"</span>
 You must replace <code class="prettyprint">SECRETKEY</code> with your personal API key.
 </aside></p>
 
+<h1 id="domain-information">Domain Information</h1>
+
+<h2 id="get-domain-info">Get domain info</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-domain-malware-requested-urls">Get domain malware-requested URLs</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/urls"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-domain-related-malware-samples">Get domain related malware samples</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/samples"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-domain-related-ips">Get domain related IPs</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/ips"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-domain-reputation">Get domain reputation</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-historical-domain-reputation">Get historical domain reputation</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/rephistory"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-domain-nameserver-info">Get domain nameserver info</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/nameservers"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-domain-whois-info">Get domain whois info</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/whois"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bing.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"registrant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Microsoft Corporation"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"domains@microsoft.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1996-01-29"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-11-29"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-30"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"registrar"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MarkMonitor Inc."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.markmonitor.com"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves whois info for a single domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/{domain}/whois</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>None</td>
+<td>The domain of the whois info to be retrieved.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>No</td>
+<td>The domain associated with the whois record.</td>
+</tr>
+<tr>
+<td>registrant.name</td>
+<td>Yes</td>
+<td>Name of the domain registrant.</td>
+</tr>
+<tr>
+<td>registrant.email</td>
+<td>Yes</td>
+<td>Email address of the domain registrant.</td>
+</tr>
+<tr>
+<td>registrant.created</td>
+<td>Yes</td>
+<td>Date the whois record was originally created.</td>
+</tr>
+<tr>
+<td>registrant.updated</td>
+<td>Yes</td>
+<td>Date the whois record was last updated.</td>
+</tr>
+<tr>
+<td>registrant.expires</td>
+<td>Yes</td>
+<td>Date the whois record will expire.</td>
+</tr>
+<tr>
+<td>registrar.name</td>
+<td>Yes</td>
+<td>Name of the domain registrar.</td>
+</tr>
+<tr>
+<td>registrar.country</td>
+<td>Yes</td>
+<td>Home country of the domain registrar.</td>
+</tr>
+<tr>
+<td>registrar.website</td>
+<td>Yes</td>
+<td>Homepage for the domain registrar.</td>
+</tr>
+</tbody></table>
+
+<h1 id="ip-information">IP Information</h1>
+
+<h2 id="get-ip-info">Get IP info</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-ip-malware-requested-urls">Get IP malware-requested URLs</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/urls"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-ip-related-malware-samples">Get IP related malware samples</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/samples"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-ip-related-domains">Get IP related domains</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/domains"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-ip-related-ids-events">Get IP related IDS events</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/events"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-ip-reputation">Get IP reputation</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/reputation"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h2 id="get-historical-ip-reputation">Get historical IP reputation</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/rephistory"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
 <h1 id="malware-samples">Malware Samples</h1>
 
 <h2 id="get-sample-details">Get sample details</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
@@ -124,7 +348,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;</code></p>
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -179,7 +403,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tbody></table>
 
 <h2 id="get-sample-connections">Get sample connections</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/connections"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/connections"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
@@ -227,7 +451,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/connections</code></p>
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/connections</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -322,7 +546,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tbody></table>
 
 <h2 id="get-sample-dns-lookups">Get sample dns lookups</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/dns"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/dns"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
@@ -354,7 +578,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/dns</code></p>
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/dns</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -414,7 +638,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tbody></table>
 
 <h2 id="get-sample-http-requests">Get sample http requests</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/http"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/http"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
@@ -456,7 +680,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/http</code></p>
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/http</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -536,7 +760,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tbody></table>
 
 <h2 id="get-sample-ids-events">Get sample IDS events</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/events"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/events"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
@@ -576,7 +800,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/&lt;md5&gt;/events</code></p>
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/events</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -647,114 +871,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <td>signature_name</td>
 <td>Yes</td>
 <td>The name of the signature associated with this SID.</td>
-</tr>
-</tbody></table>
-
-<h1 id="whois-info">Whois Info</h1>
-
-<h2 id="get-domain-whois-info">Get Domain Whois Info</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/whois-info/bing.com"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
-</pre>
-
-<blockquote>
-<p>The JSON response should look something like:</p>
-</blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bing.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"registrant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Microsoft Corporation"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"domains@microsoft.com"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1996-01-29"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-11-29"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-30"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"registrar"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MarkMonitor Inc."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.markmonitor.com"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
-
-<p>This endpoint retrieves whois info for a single domain.</p>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/whois-info/&lt;domain&gt;</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>domain</td>
-<td>None</td>
-<td>The domain of the whois info to be retrieved.</td>
-</tr>
-</tbody></table>
-
-<h3 id="response-parameters">Response Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Optional?</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>domain</td>
-<td>No</td>
-<td>The domain associated with the whois record.</td>
-</tr>
-<tr>
-<td>registrant.name</td>
-<td>Yes</td>
-<td>Name of the domain registrant.</td>
-</tr>
-<tr>
-<td>registrant.email</td>
-<td>Yes</td>
-<td>Email address of the domain registrant.</td>
-</tr>
-<tr>
-<td>registrant.created</td>
-<td>Yes</td>
-<td>Date the whois record was originally created.</td>
-</tr>
-<tr>
-<td>registrant.updated</td>
-<td>Yes</td>
-<td>Date the whois record was last updated.</td>
-</tr>
-<tr>
-<td>registrant.expires</td>
-<td>Yes</td>
-<td>Date the whois record will expire.</td>
-</tr>
-<tr>
-<td>registrar.name</td>
-<td>Yes</td>
-<td>Name of the domain registrar.</td>
-</tr>
-<tr>
-<td>registrar.country</td>
-<td>Yes</td>
-<td>Home country of the domain registrar.</td>
-</tr>
-<tr>
-<td>registrar.website</td>
-<td>Yes</td>
-<td>Homepage for the domain registrar.</td>
 </tr>
 </tbody></table>
 
