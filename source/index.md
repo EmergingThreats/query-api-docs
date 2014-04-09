@@ -376,14 +376,14 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}/dns"
       "source": "177f3c8a2623d4efb41b0020d680be83",
       "date": "2014-04-02",
       "domain": "partirenimmobilier.fr",
-      "destination_ip": "10.10.10.1",
+      "address": "10.10.10.1",
       "record_type": "A"
     },
     {
       "source": "177f3c8a2623d4efb41b0020d680be83",
       "date": "2014-04-02",
       "domain": "www.fredianipueyrredon.com.ar",
-      "destination_ip": "10.10.10.1",
+      "address": "10.10.10.1",
       "record_type": "A"
     }
   ]
@@ -410,7 +410,7 @@ source | No | The source of the dns lookup.
 date | No | The date the lookup was observed.
 domain | No | The domain whose DNS record was being queried.
 answer | Yes | If the DNS response was not an A record pointing to an IP, this field will contain the DNS query response (e.g. the CNAME).
-destination_ip | Yes | If the DNS response was an A record pointing to an IP, this field will contain the IP in question.
+address | Yes | If the DNS response was an A record pointing to an IP, this field will contain the IP in question.
 record_type | Yes | The DNS record type (e.g. A, CNAME, etc.)
 
 ## Get sample http requests
