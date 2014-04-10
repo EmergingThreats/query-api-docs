@@ -86,12 +86,66 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/urls"
   -H "Authorization: SECRETKEY"
 ```
 
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    "/index.php?id=XXXXXXXXXXXXXXX&scn=X&inf=X&ver=XX&cnt=XXX",
+    "/index.php?id=XXXXXXXXXXXXXX&scn=X&inf=X&ver=XX&cnt=XXX",
+    "/index.php?id=XXXXXXXXXXXXXXXXXX&scn=X&inf=X&ver=XX&cnt=XXX"
+  ]
+}
+```
+
+This endpoint retrieves the most recent http requests made by malware to the specified domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/domains/{domain}/urls`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+url | No | The url string of the request with query parameter values masked.
+
 ## Get domain related malware samples
 
 ```shell
 curl "https://api.emergingthreats.net/v1/domains/{domain}/samples"
   -H "Authorization: SECRETKEY"
 ```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": {
+    "2eba8dff8d8f7a3cb2fe00b8c829a5d1": {
+      "dates": "2014-02-02 - 2014-02-02"
+    },
+    "ca00817016fcfed6f9e81062a74343da": {
+      "dates": "2014-01-05 - 2014-01-05"
+    }
+  }
+}
+```
+
+This endpoint retrieves the most recent malware samples that communicated with the specified domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/domains/{domain}/samples`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+md5 | No | The md5sum of the malware sample.
+dates | No | The dates the malware sample has been observed to have actively communicated with the specified domain.
 
 ## Get domain related IPs
 
@@ -100,6 +154,35 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/ips"
   -H "Authorization: SECRETKEY"
 ```
 
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": {
+    "213.219.245.212": [
+      "2011-12-04 - 2012-02-27"
+    ],
+    "78.109.30.160": [
+      "2014-02-22 - 2014-04-02"
+    ]
+  }
+}
+```
+
+This endpoint retrieves the most recent IPs that have been associated with the specified domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/domains/{domain}/ips`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+ip | No | 
+dates | No | The dates the IP has been observed to have been associated with the specified domain.
+
 ## Get domain related IDS events
 
 ```shell
@@ -107,12 +190,91 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/events"
   -H "Authorization: SECRETKEY"
 ```
 
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "domain": "citi-bank.ru",
+      "date": "2014-03-31",
+      "source": false,
+      "sid": "2803583",
+      "signature": "ETPRO TROJAN Win32.Sality.At Checkin",
+      "count": 1
+    },
+    {
+      "domain": "citi-bank.ru",
+      "date": "2014-03-23",
+      "source": false,
+      "sid": "2803583",
+      "signature": "ETPRO TROJAN Win32.Sality.At Checkin",
+      "count": 2
+    }
+  ]
+}
+```
+
+This endpoint retrieves the most recent IDS events that have been observed against the specified domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/domains/{domain}/events`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+domain | No | 
+date | No | The date the IDS event was observed.
+source | No | Indicates whether the domain was the source of the IDS event.
+sid | No | The SID that generated the IDS event.
+signature | No | The signature name of the SID that generated the IDS event.
+count | No | How many times this particular IDS event was observed in our sensor net for the given date.
+
+
 ## Get domain nameserver info
 
 ```shell
 curl "https://api.emergingthreats.net/v1/domains/{domain}/nameservers"
   -H "Authorization: SECRETKEY"
 ```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "server": "ns1.yourhostingaccount.com.",
+      "first_seen": "2013-02-15",
+      "last_seen": "2013-11-17"
+    },
+    {
+      "server": "ns1.mydomain.com",
+      "first_seen": "2013-08-16",
+      "last_seen": "2013-11-17"
+    }
+  ]
+}
+```
+
+This endpoint retrieves the nameserver information related to the specified domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/domains/{domain}/nameservers`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+server | No | The address of a nameserver associated with the domain.
+first_seen | Yes | The date the nameserver was first seen associated to the domain.
+last_seen | Yes | The date the nameserver was last seen associated to the domain.
+
 
 ## Get domain whois info
 
@@ -150,12 +312,6 @@ This endpoint retrieves whois info for a single domain.
 
 `GET https://api.emergingthreats.net/v1/{domain}/whois`
 
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-domain | None | The domain of the whois info to be retrieved.
-
 ### Response Parameters
 
 Parameter | Optional? | Description
@@ -180,12 +336,66 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/urls"
   -H "Authorization: SECRETKEY"
 ```
 
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    "/index.php?id=XXXXXXXXXXXXXXX&scn=X&inf=X&ver=XX&cnt=XXX",
+    "/index.php?id=XXXXXXXXXXXXXX&scn=X&inf=X&ver=XX&cnt=XXX",
+    "/index.php?id=XXXXXXXXXXXXXXXXXX&scn=X&inf=X&ver=XX&cnt=XXX"
+  ]
+}
+```
+
+This endpoint retrieves the most recent http requests made by malware to the specified IP.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/ips/{ip}/urls`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+url | No | The url string of the request with query parameter values masked.
+
 ## Get IP related malware samples
 
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/samples"
   -H "Authorization: SECRETKEY"
 ```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": {
+    "2eba8dff8d8f7a3cb2fe00b8c829a5d1": {
+      "dates": "2014-02-02 - 2014-02-02"
+    },
+    "ca00817016fcfed6f9e81062a74343da": {
+      "dates": "2014-01-05 - 2014-01-05"
+    }
+  }
+}
+```
+
+This endpoint retrieves the most recent malware samples that communicated with the specified IP.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/ips/{ip}/samples`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+md5 | No | The md5sum of the malware sample.
+dates | No | The dates the malware sample has been observed to have actively communicated with the specified IP.
 
 ## Get IP related domains
 
@@ -194,12 +404,85 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/domains"
   -H "Authorization: SECRETKEY"
 ```
 
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": {
+    "salemnet.vo.llnwd.net": [
+      "2012-09-01 - 2014-02-15"
+    ],
+    "oversee.vo.llnwd.net": [
+      "2012-08-17 - 2014-02-28"
+    ]
+  }
+}
+```
+
+This endpoint retrieves the most recent domains that have been associated with the specified IP.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/ips/{ip}/domains`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+domain | No | 
+dates | No | The dates the domain has been observed to have been associated with the specified IP.
+
+
 ## Get IP related IDS events
 
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/events"
   -H "Authorization: SECRETKEY"
 ```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "ip": "208.111.161.254",
+      "date": "2014-04-08",
+      "source": false,
+      "sid": "2008365",
+      "signature": "ET TROJAN Playtech Downloader Online Gaming Checkin",
+      "count": 1
+    },
+    {
+      "ip": "208.111.161.254",
+      "date": "2014-04-02",
+      "source": false,
+      "sid": "2008365",
+      "signature": "ET TROJAN Playtech Downloader Online Gaming Checkin",
+      "count": 1
+    }
+  ]
+}
+```
+
+This endpoint retrieves the most recent IDS events that have been observed against the specified IP.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/ips/{ip}/events`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+ip | No | The string representation of the IP address, or "private" if it was a private IP.
+date | No | The date the IDS event was observed.
+source | No | Indicates whether the IP was the source of the IDS event.
+sid | No | The SID that generated the IDS event.
+signature | No | The signature name of the SID that generated the IDS event.
+count | No | How many times this particular IDS event was observed in our sensor net for the given date.
 
 
 # Malware Samples
@@ -230,12 +513,6 @@ This endpoint retrieves metadata information for a single malware sample.
 ### HTTP Request
 
 `GET https://api.emergingthreats.net/v1/samples/{md5}`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-md5 | None | The md5sum of the malware sample to be retrieved.
 
 ### Response Parameters
 
@@ -299,12 +576,6 @@ This endpoint retrieves the most recent connections an individual malware sample
 
 `GET https://api.emergingthreats.net/v1/samples/{md5}/connections`
 
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-md5 | None | The md5sum of the malware sample whose connections are to be retrieved.
-
 ### Response Parameters
 
 Parameter | Optional? | Description
@@ -359,12 +630,6 @@ This endpoint retrieves the most recent dns lookups an individual malware sample
 ### HTTP Request
 
 `GET https://api.emergingthreats.net/v1/samples/{md5}/dns`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-md5 | None | The md5sum of the malware sample whose dns lookups are to be retrieved.
 
 ### Response Parameters
 
@@ -423,12 +688,6 @@ This endpoint retrieves the most recent http requests an individual malware samp
 ### HTTP Request
 
 `GET https://api.emergingthreats.net/v1/samples/{md5}/http`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-md5 | None | The md5sum of the malware sample whose http requests are to be retrieved.
 
 ### Response Parameters
 
@@ -489,12 +748,6 @@ This endpoint retrieves the most recent IDS events an individual malware sample 
 ### HTTP Request
 
 `GET https://api.emergingthreats.net/v1/samples/{md5}/events`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-md5 | None | The md5sum of the malware sample whose IDS events are to be retrieved.
 
 ### Response Parameters
 
