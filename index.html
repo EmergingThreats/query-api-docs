@@ -71,9 +71,7 @@
 <blockquote>
 <p>Summary of Resource URL Patterns</p>
 </blockquote>
-<pre class="highlight plaintext">/v1/domains/{domain}
-
-/v1/domains/{domain}/urls
+<pre class="highlight plaintext">/v1/domains/{domain}/urls
 
 /v1/domains/{domain}/samples
 
@@ -81,13 +79,9 @@
 
 /v1/domains/{domain}/events
 
-/v1/domains/{domain}/reputation
-
 /v1/domains/{domain}/nameservers
 
 /v1/domains/{domain}/whois
-
-/v1/ips/{ip}
 
 /v1/ips/{ip}/urls
 
@@ -96,8 +90,6 @@
 /v1/ips/{ip}/domains
 
 /v1/ips/{ip}/events
-
-/v1/ips/{ip}/reputation
 
 /v1/samples/{md5}
 
@@ -142,11 +134,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h1 id="domain-information">Domain Information</h1>
 
-<h2 id="get-domain-info">Get domain info</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
-</pre>
-
 <h2 id="get-domain-malware-requested-urls">Get domain malware-requested URLs</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/urls"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
@@ -164,11 +151,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h2 id="get-domain-related-ids-events">Get domain related IDS events</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/events"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
-</pre>
-
-<h2 id="get-domain-reputation">Get domain reputation</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
@@ -285,11 +267,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h1 id="ip-information">IP Information</h1>
 
-<h2 id="get-ip-info">Get IP info</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
-</pre>
-
 <h2 id="get-ip-malware-requested-urls">Get IP malware-requested URLs</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/urls"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
@@ -307,11 +284,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h2 id="get-ip-related-ids-events">Get IP related IDS events</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/events"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
-</pre>
-
-<h2 id="get-ip-reputation">Get IP reputation</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/reputation"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
