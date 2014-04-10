@@ -17,8 +17,6 @@ includes:
 > Summary of Resource URL Patterns
 
 ```plaintext
-/v1/domains/{domain}
-
 /v1/domains/{domain}/urls
 
 /v1/domains/{domain}/samples
@@ -27,13 +25,9 @@ includes:
 
 /v1/domains/{domain}/events
 
-/v1/domains/{domain}/reputation
-
 /v1/domains/{domain}/nameservers
 
 /v1/domains/{domain}/whois
-
-/v1/ips/{ip}
 
 /v1/ips/{ip}/urls
 
@@ -42,8 +36,6 @@ includes:
 /v1/ips/{ip}/domains
 
 /v1/ips/{ip}/events
-
-/v1/ips/{ip}/reputation
 
 /v1/samples/{md5}
 
@@ -87,13 +79,6 @@ You must replace `SECRETKEY` with your personal API key.
 
 # Domain Information
 
-## Get domain info
-
-```shell
-curl "https://api.emergingthreats.net/v1/domains/{domain}"
-  -H "Authorization: SECRETKEY"
-```
-
 ## Get domain malware-requested URLs
 
 ```shell
@@ -119,13 +104,6 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/ips"
 
 ```shell
 curl "https://api.emergingthreats.net/v1/domains/{domain}/events"
-  -H "Authorization: SECRETKEY"
-```
-
-## Get domain reputation
-
-```shell
-curl "https://api.emergingthreats.net/v1/domains/{domain}/reputation"
   -H "Authorization: SECRETKEY"
 ```
 
@@ -195,13 +173,6 @@ registrar.website | Yes | Homepage for the domain registrar.
 
 # IP Information
 
-## Get IP info
-
-```shell
-curl "https://api.emergingthreats.net/v1/ips/{ip}"
-  -H "Authorization: SECRETKEY"
-```
-
 ## Get IP malware-requested URLs
 
 ```shell
@@ -227,13 +198,6 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/domains"
 
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/events"
-  -H "Authorization: SECRETKEY"
-```
-
-## Get IP reputation
-
-```shell
-curl "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
   -H "Authorization: SECRETKEY"
 ```
 
