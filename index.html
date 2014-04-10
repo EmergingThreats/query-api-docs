@@ -139,25 +139,271 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"/index.php?id=XXXXXXXXXXXXXXX&amp;scn=X&amp;inf=X&amp;ver=XX&amp;cnt=XXX"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"/index.php?id=XXXXXXXXXXXXXX&amp;scn=X&amp;inf=X&amp;ver=XX&amp;cnt=XXX"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"/index.php?id=XXXXXXXXXXXXXXXXXX&amp;scn=X&amp;inf=X&amp;ver=XX&amp;cnt=XXX"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent http requests made by malware to the specified domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/urls</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>url</td>
+<td>No</td>
+<td>The url string of the request with query parameter values masked.</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-domain-related-malware-samples">Get domain related malware samples</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/samples"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"2eba8dff8d8f7a3cb2fe00b8c829a5d1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"dates"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-02 - 2014-02-02"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"ca00817016fcfed6f9e81062a74343da"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"dates"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-01-05 - 2014-01-05"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent malware samples that communicated with the specified domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/samples</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>md5</td>
+<td>No</td>
+<td>The md5sum of the malware sample.</td>
+</tr>
+<tr>
+<td>dates</td>
+<td>No</td>
+<td>The dates the malware sample has been observed to have actively communicated with the specified domain.</td>
+</tr>
+</tbody></table>
 
 <h2 id="get-domain-related-ips">Get domain related IPs</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/ips"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"213.219.245.212"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"2011-12-04 - 2012-02-27"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"78.109.30.160"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"2014-02-22 - 2014-04-02"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent IPs that have been associated with the specified domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/ips</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ip</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>dates</td>
+<td>No</td>
+<td>The dates the IP has been observed to have been associated with the specified domain.</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-domain-related-ids-events">Get domain related IDS events</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/events"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"citi-bank.ru"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-03-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2803583"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"signature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETPRO TROJAN Win32.Sality.At Checkin"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"citi-bank.ru"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-03-23"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2803583"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"signature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETPRO TROJAN Win32.Sality.At Checkin"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent IDS events that have been observed against the specified domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/events</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>date</td>
+<td>No</td>
+<td>The date the IDS event was observed.</td>
+</tr>
+<tr>
+<td>source</td>
+<td>No</td>
+<td>Indicates whether the domain was the source of the IDS event.</td>
+</tr>
+<tr>
+<td>sid</td>
+<td>No</td>
+<td>The SID that generated the IDS event.</td>
+</tr>
+<tr>
+<td>signature</td>
+<td>No</td>
+<td>The signature name of the SID that generated the IDS event.</td>
+</tr>
+<tr>
+<td>count</td>
+<td>No</td>
+<td>How many times this particular IDS event was observed in our sensor net for the given date.</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-domain-nameserver-info">Get domain nameserver info</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/nameservers"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ns1.yourhostingaccount.com."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-02-15"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-11-17"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ns1.mydomain.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-08-16"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-11-17"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the nameserver information related to the specified domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/nameservers</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>server</td>
+<td>No</td>
+<td>The address of a nameserver associated with the domain.</td>
+</tr>
+<tr>
+<td>first_seen</td>
+<td>Yes</td>
+<td>The date the nameserver was first seen associated to the domain.</td>
+</tr>
+<tr>
+<td>last_seen</td>
+<td>Yes</td>
+<td>The date the nameserver was last seen associated to the domain.</td>
+</tr>
+</tbody></table>
 
 <h2 id="get-domain-whois-info">Get domain whois info</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/whois"</span>
@@ -192,22 +438,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">GET https://api.emergingthreats.net/v1/{domain}/whois</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>domain</td>
-<td>None</td>
-<td>The domain of the whois info to be retrieved.</td>
-</tr>
-</tbody></table>
 
 <h3 id="response-parameters">Response Parameters</h3>
 
@@ -272,20 +502,214 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"/index.php?id=XXXXXXXXXXXXXXX&amp;scn=X&amp;inf=X&amp;ver=XX&amp;cnt=XXX"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"/index.php?id=XXXXXXXXXXXXXX&amp;scn=X&amp;inf=X&amp;ver=XX&amp;cnt=XXX"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"/index.php?id=XXXXXXXXXXXXXXXXXX&amp;scn=X&amp;inf=X&amp;ver=XX&amp;cnt=XXX"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent http requests made by malware to the specified IP.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/ips/{ip}/urls</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>url</td>
+<td>No</td>
+<td>The url string of the request with query parameter values masked.</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-ip-related-malware-samples">Get IP related malware samples</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/samples"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"2eba8dff8d8f7a3cb2fe00b8c829a5d1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"dates"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-02 - 2014-02-02"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"ca00817016fcfed6f9e81062a74343da"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"dates"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-01-05 - 2014-01-05"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent malware samples that communicated with the specified IP.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/ips/{ip}/samples</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>md5</td>
+<td>No</td>
+<td>The md5sum of the malware sample.</td>
+</tr>
+<tr>
+<td>dates</td>
+<td>No</td>
+<td>The dates the malware sample has been observed to have actively communicated with the specified IP.</td>
+</tr>
+</tbody></table>
 
 <h2 id="get-ip-related-domains">Get IP related domains</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/domains"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"salemnet.vo.llnwd.net"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"2012-09-01 - 2014-02-15"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"oversee.vo.llnwd.net"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"2012-08-17 - 2014-02-28"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent domains that have been associated with the specified IP.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/ips/{ip}/domains</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>dates</td>
+<td>No</td>
+<td>The dates the domain has been observed to have been associated with the specified IP.</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-ip-related-ids-events">Get IP related IDS events</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/events"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"208.111.161.254"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-08"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2008365"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"signature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ET TROJAN Playtech Downloader Online Gaming Checkin"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"208.111.161.254"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2008365"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"signature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ET TROJAN Playtech Downloader Online Gaming Checkin"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent IDS events that have been observed against the specified IP.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/ips/{ip}/events</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ip</td>
+<td>No</td>
+<td>The string representation of the IP address, or &ldquo;private&rdquo; if it was a private IP.</td>
+</tr>
+<tr>
+<td>date</td>
+<td>No</td>
+<td>The date the IDS event was observed.</td>
+</tr>
+<tr>
+<td>source</td>
+<td>No</td>
+<td>Indicates whether the IP was the source of the IDS event.</td>
+</tr>
+<tr>
+<td>sid</td>
+<td>No</td>
+<td>The SID that generated the IDS event.</td>
+</tr>
+<tr>
+<td>signature</td>
+<td>No</td>
+<td>The signature name of the SID that generated the IDS event.</td>
+</tr>
+<tr>
+<td>count</td>
+<td>No</td>
+<td>How many times this particular IDS event was observed in our sensor net for the given date.</td>
+</tr>
+</tbody></table>
 
 <h1 id="malware-samples">Malware Samples</h1>
 
@@ -313,22 +737,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>md5</td>
-<td>None</td>
-<td>The md5sum of the malware sample to be retrieved.</td>
-</tr>
-</tbody></table>
 
 <h3 id="response-parameters">Response Parameters</h3>
 
@@ -411,22 +819,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/connections</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>md5</td>
-<td>None</td>
-<td>The md5sum of the malware sample whose connections are to be retrieved.</td>
-</tr>
-</tbody></table>
 
 <h3 id="response-parameters">Response Parameters</h3>
 
@@ -539,22 +931,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/dns</code></p>
 
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>md5</td>
-<td>None</td>
-<td>The md5sum of the malware sample whose dns lookups are to be retrieved.</td>
-</tr>
-</tbody></table>
-
 <h3 id="response-parameters">Response Parameters</h3>
 
 <table><thead>
@@ -640,22 +1016,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/http</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>md5</td>
-<td>None</td>
-<td>The md5sum of the malware sample whose http requests are to be retrieved.</td>
-</tr>
-</tbody></table>
 
 <h3 id="response-parameters">Response Parameters</h3>
 
@@ -760,22 +1120,6 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">GET https://api.emergingthreats.net/v1/samples/{md5}/events</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>md5</td>
-<td>None</td>
-<td>The md5sum of the malware sample whose IDS events are to be retrieved.</td>
-</tr>
-</tbody></table>
 
 <h3 id="response-parameters">Response Parameters</h3>
 
