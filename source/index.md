@@ -123,14 +123,18 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/samples"
 ```json
 {
   "success": true,
-  "response": {
-    "2eba8dff8d8f7a3cb2fe00b8c829a5d1": {
-      "dates": "2014-02-02 - 2014-02-02"
+  "response": [
+    {
+      "source": "45999bfea907bf37acbab63d5d9ea683",
+      "first_seen": "2014-02-13",
+      "last_seen": "2014-02-13"
     },
-    "ca00817016fcfed6f9e81062a74343da": {
-      "dates": "2014-01-05 - 2014-01-05"
+    {
+      "source": "f75da3cd3a38aadebdcf86eb53c6eb1c",
+      "first_seen": "2014-02-13",
+      "last_seen": "2014-02-13"
     }
-  }
+  ]
 }
 ```
 
@@ -144,8 +148,9 @@ This endpoint retrieves the most recent malware samples that communicated with t
 
 Parameter | Optional? | Description
 --------- | --------- | -----------
-md5 | No | The md5sum of the malware sample.
-dates | No | The dates the malware sample has been observed to have actively communicated with the specified domain.
+source | No | The md5sum of the malware sample.
+first_seen | No | The date the malware sample was first seen associated to the domain.
+last_seen | No | The date the malware sample was last seen associated to the domain.
 
 ## Get domain related IPs
 
