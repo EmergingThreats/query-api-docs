@@ -164,14 +164,18 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/ips"
 ```json
 {
   "success": true,
-  "response": {
-    "213.219.245.212": [
-      "2011-12-04 - 2012-02-27"
-    ],
-    "78.109.30.160": [
-      "2014-02-22 - 2014-04-02"
-    ]
-  }
+  "response": [
+    {
+      "ip": "213.219.245.212",
+      "first_seen": "2011-12-04",
+      "last_seen": "2012-02-27"
+    },
+    {
+      "ip": "78.109.30.160",
+      "first_seen": "2014-02-22",
+      "last_seen": "2014-04-09"
+    }
+  ]
 }
 ```
 
@@ -186,7 +190,8 @@ This endpoint retrieves the most recent IPs that have been associated with the s
 Parameter | Optional? | Description
 --------- | --------- | -----------
 ip | No | 
-dates | No | The dates the IP has been observed to have been associated with the specified domain.
+first_seen | No | The date the IP was first seen associated to the domain.
+last_seen | No | The date the IP was last seen associated to the domain.
 
 ## Get domain related IDS events
 
@@ -414,14 +419,18 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/domains"
 ```json
 {
   "success": true,
-  "response": {
-    "salemnet.vo.llnwd.net": [
-      "2012-09-01 - 2014-02-15"
-    ],
-    "oversee.vo.llnwd.net": [
-      "2012-08-17 - 2014-02-28"
-    ]
-  }
+  "response": [
+    {
+      "domain": "citi-bank.ru",
+      "first_seen": "2014-02-22",
+      "last_seen": "2014-04-09"
+    },
+    {
+      "domain": "tat-neftbank.ru",
+      "first_seen": "2014-04-04",
+      "last_seen": "2014-04-04"
+    }
+  ]
 }
 ```
 
@@ -436,7 +445,8 @@ This endpoint retrieves the most recent domains that have been associated with t
 Parameter | Optional? | Description
 --------- | --------- | -----------
 domain | No | 
-dates | No | The dates the domain has been observed to have been associated with the specified IP.
+first_seen | No | The date the domain was first seen associated to the IP.
+last_seen | No | The date the domain was last seen associated to the IP.
 
 
 ## Get IP related IDS events
