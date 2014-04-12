@@ -241,14 +241,18 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"213.219.245.212"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"2011-12-04 - 2012-02-27"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"78.109.30.160"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"2014-02-22 - 2014-04-02"</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"213.219.245.212"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2011-12-04"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-02-27"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"78.109.30.160"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-22"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-09"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
@@ -273,9 +277,14 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <td></td>
 </tr>
 <tr>
-<td>dates</td>
+<td>first_seen</td>
 <td>No</td>
-<td>The dates the IP has been observed to have been associated with the specified domain.</td>
+<td>The date the IP was first seen associated to the domain.</td>
+</tr>
+<tr>
+<td>last_seen</td>
+<td>No</td>
+<td>The date the IP was last seen associated to the domain.</td>
 </tr>
 </tbody></table>
 
@@ -604,14 +613,18 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"salemnet.vo.llnwd.net"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"2012-09-01 - 2014-02-15"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"oversee.vo.llnwd.net"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"2012-08-17 - 2014-02-28"</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"citi-bank.ru"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-22"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-09"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tat-neftbank.ru"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-04"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-04-04"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
@@ -636,9 +649,14 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <td></td>
 </tr>
 <tr>
-<td>dates</td>
+<td>first_seen</td>
 <td>No</td>
-<td>The dates the domain has been observed to have been associated with the specified IP.</td>
+<td>The date the domain was first seen associated to the IP.</td>
+</tr>
+<tr>
+<td>last_seen</td>
+<td>No</td>
+<td>The date the domain was last seen associated to the IP.</td>
 </tr>
 </tbody></table>
 
