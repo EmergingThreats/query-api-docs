@@ -17,25 +17,29 @@ includes:
 > Summary of Resource URL Patterns
 
 ```plaintext
-/v1/domains/{domain}/urls
+/v1/domains/{domain}/events
 
-/v1/domains/{domain}/samples
+/v1/domains/{domain}/geoloc
 
 /v1/domains/{domain}/ips
 
-/v1/domains/{domain}/events
-
 /v1/domains/{domain}/nameservers
 
+/v1/domains/{domain}/samples
+
+/v1/domains/{domain}/urls
+
 /v1/domains/{domain}/whois
-
-/v1/ips/{ip}/urls
-
-/v1/ips/{ip}/samples
 
 /v1/ips/{ip}/domains
 
 /v1/ips/{ip}/events
+
+/v1/ips/{ip}/geoloc
+
+/v1/ips/{ip}/samples
+
+/v1/ips/{ip}/urls
 
 /v1/samples/{md5}
 
@@ -43,9 +47,9 @@ includes:
 
 /v1/samples/{md5}/dns
 
-/v1/samples/{md5}/http
-
 /v1/samples/{md5}/events
+
+/v1/samples/{md5}/http
 ```
 
 The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.
@@ -320,7 +324,7 @@ This endpoint retrieves whois info for a single domain.
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/{domain}/whois`
+`GET https://api.emergingthreats.net/v1/domains/{domain}/whois`
 
 ### Response Parameters
 
@@ -335,6 +339,49 @@ registrant.expires | Yes | Date the whois record will expire.
 registrar.name | Yes | Name of the domain registrar.
 registrar.country | Yes | Home country of the domain registrar.
 registrar.website | Yes | Homepage for the domain registrar.
+
+
+## Get domain geolocation info
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/geoloc"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "ip": "74.117.114.119",
+      "country": "KY"
+    },
+    {
+      "ip": "8.5.1.37",
+      "country": "US",
+      "region": "CA",
+      "city": "Costa Mesa"
+    }
+  ]
+}
+```
+
+This endpoint retrieves geolication info for a single domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/domains/{domain}/geoloc`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+ip | No | An IP associated with the specified domain.
+country | No | The country in which the IP was last observed.
+region | Yes | A two character [ISO-3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) or [FIPS 10-4](http://en.wikipedia.org/wiki/FIPS_10-4) code for the state or region associated with the IP.
+city | Yes | The city or town name associated with the IP.
 
 
 # IP Information
@@ -498,6 +545,45 @@ source | No | Indicates whether the IP was the source of the IDS event.
 sid | No | The SID that generated the IDS event.
 signature | No | The signature name of the SID that generated the IDS event.
 count | No | How many times this particular IDS event was observed in our sensor net for the given date.
+
+
+## Get IP geolocation info
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/geoloc"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "ip": "216.38.198.78",
+      "country": "US",
+      "region": "CO",
+      "city": "Henderson"
+    }
+  ]
+}
+```
+
+This endpoint retrieves geolication info for a single IP address.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/ips/{ip}/geoloc`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+ip | No | The IP address specified.
+country | No | The country in which the IP was last observed.
+region | Yes | A two character [ISO-3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) or [FIPS 10-4](http://en.wikipedia.org/wiki/FIPS_10-4) code for the state or region associated with the IP.
+city | Yes | The city or town name associated with the IP.
 
 
 # Malware Samples
