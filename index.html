@@ -71,25 +71,29 @@
 <blockquote>
 <p>Summary of Resource URL Patterns</p>
 </blockquote>
-<pre class="highlight plaintext">/v1/domains/{domain}/urls
+<pre class="highlight plaintext">/v1/domains/{domain}/events
 
-/v1/domains/{domain}/samples
+/v1/domains/{domain}/geoloc
 
 /v1/domains/{domain}/ips
 
-/v1/domains/{domain}/events
-
 /v1/domains/{domain}/nameservers
 
+/v1/domains/{domain}/samples
+
+/v1/domains/{domain}/urls
+
 /v1/domains/{domain}/whois
-
-/v1/ips/{ip}/urls
-
-/v1/ips/{ip}/samples
 
 /v1/ips/{ip}/domains
 
 /v1/ips/{ip}/events
+
+/v1/ips/{ip}/geoloc
+
+/v1/ips/{ip}/samples
+
+/v1/ips/{ip}/urls
 
 /v1/samples/{md5}
 
@@ -97,9 +101,9 @@
 
 /v1/samples/{md5}/dns
 
-/v1/samples/{md5}/http
-
 /v1/samples/{md5}/events
+
+/v1/samples/{md5}/http
 </pre>
 
 <p>The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.</p>
@@ -455,7 +459,7 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/{domain}/whois</code></p>
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/whois</code></p>
 
 <h3 id="response-parameters">Response Parameters</h3>
 
@@ -510,6 +514,68 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <td>registrar.website</td>
 <td>Yes</td>
 <td>Homepage for the domain registrar.</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-domain-geolocation-info">Get domain geolocation info</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/geoloc"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"74.117.114.119"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KY"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.5.1.37"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Costa Mesa"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves geolication info for a single domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/geoloc</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ip</td>
+<td>No</td>
+<td>An IP associated with the specified domain.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>No</td>
+<td>The country in which the IP was last observed.</td>
+</tr>
+<tr>
+<td>region</td>
+<td>Yes</td>
+<td>A two character <a href="http://en.wikipedia.org/wiki/ISO_3166-2">ISO-3166-2</a> or <a href="http://en.wikipedia.org/wiki/FIPS_10-4">FIPS 10-4</a> code for the state or region associated with the IP.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>Yes</td>
+<td>The city or town name associated with the IP.</td>
 </tr>
 </tbody></table>
 
@@ -735,6 +801,64 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <td>count</td>
 <td>No</td>
 <td>How many times this particular IDS event was observed in our sensor net for the given date.</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-ip-geolocation-info">Get IP geolocation info</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/geoloc"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"216.38.198.78"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CO"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henderson"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves geolication info for a single IP address.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/ips/{ip}/geoloc</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ip</td>
+<td>No</td>
+<td>The IP address specified.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>No</td>
+<td>The country in which the IP was last observed.</td>
+</tr>
+<tr>
+<td>region</td>
+<td>Yes</td>
+<td>A two character <a href="http://en.wikipedia.org/wiki/ISO_3166-2">ISO-3166-2</a> or <a href="http://en.wikipedia.org/wiki/FIPS_10-4">FIPS 10-4</a> code for the state or region associated with the IP.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>Yes</td>
+<td>The city or town name associated with the IP.</td>
 </tr>
 </tbody></table>
 
