@@ -71,13 +71,17 @@
 <blockquote>
 <p>Summary of Resource URL Patterns</p>
 </blockquote>
-<pre class="highlight plaintext">/v1/domains/{domain}/events
+<pre class="highlight plaintext">/v1/repcategories
+
+/v1/domains/{domain}/events
 
 /v1/domains/{domain}/geoloc
 
 /v1/domains/{domain}/ips
 
 /v1/domains/{domain}/nameservers
+
+/v1/domains/{domain}/reputation
 
 /v1/domains/{domain}/samples
 
@@ -90,6 +94,8 @@
 /v1/ips/{ip}/events
 
 /v1/ips/{ip}/geoloc
+
+/v1/ips/{ip}/reputation
 
 /v1/ips/{ip}/samples
 
@@ -136,7 +142,117 @@ curl <span class="s2">"api_endpoint_here"</span>
 You must replace <code class="prettyprint">SECRETKEY</code> with your personal API key.
 </aside></p>
 
+<h1 id="reputation-metadata">Reputation Metadata</h1>
+
+<h2 id="list-reputation-categories">List reputation categories</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/repcategories"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bot"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Known Infected Bot"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CnC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Malware Command and Control Server"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Spam"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Known Spam Source"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint lists all of the possible categories for reputation categorization and a brief description of each item.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/repcategories</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>No</td>
+<td>The name of the reputation category.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>No</td>
+<td>A brief description of the category.</td>
+</tr>
+</tbody></table>
+
 <h1 id="domain-information">Domain Information</h1>
+
+<h2 id="get-current-domain-reputation">Get current domain reputation</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DynDNS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CnC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SpywareCnC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">95</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the current reputation scores in categories that are currently associated with the specified domain.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/domains/{domain}/reputation</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>category</td>
+<td>No</td>
+<td>The category of reputation under which this score falls.</td>
+</tr>
+<tr>
+<td>score</td>
+<td>No</td>
+<td>The numerical reputation score for this category.  Scores are non-negative integers ranging from 0 to 127.</td>
+</tr>
+</tbody></table>
 
 <h2 id="get-domain-malware-requested-urls">Get domain malware-requested URLs</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/urls"</span>
@@ -580,6 +696,60 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tbody></table>
 
 <h1 id="ip-information">IP Information</h1>
+
+<h2 id="get-current-ip-reputation">Get current IP reputation</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/reputation"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DynDNS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CnC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SpywareCnC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">95</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the current reputation scores in categories that are currently associated with the specified IP.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/ips/{ip}/reputation</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>category</td>
+<td>No</td>
+<td>The category of reputation under which this score falls.</td>
+</tr>
+<tr>
+<td>score</td>
+<td>No</td>
+<td>The numerical reputation score for this category.  Scores are non-negative integers ranging from 0 to 127.</td>
+</tr>
+</tbody></table>
 
 <h2 id="get-ip-malware-requested-urls">Get IP malware-requested URLs</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/urls"</span>
