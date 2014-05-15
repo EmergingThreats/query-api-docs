@@ -17,6 +17,8 @@ includes:
 > Summary of Resource URL Patterns
 
 ```plaintext
+/v1/repcategories
+
 /v1/domains/{domain}/events
 
 /v1/domains/{domain}/geoloc
@@ -24,6 +26,8 @@ includes:
 /v1/domains/{domain}/ips
 
 /v1/domains/{domain}/nameservers
+
+/v1/domains/{domain}/reputation
 
 /v1/domains/{domain}/samples
 
@@ -36,6 +40,8 @@ includes:
 /v1/ips/{ip}/events
 
 /v1/ips/{ip}/geoloc
+
+/v1/ips/{ip}/reputation
 
 /v1/ips/{ip}/samples
 
@@ -81,7 +87,95 @@ You must replace `SECRETKEY` with your personal API key.
 </aside>
 
 
+# Reputation Metadata
+
+## List reputation categories
+
+```shell
+curl "https://api.emergingthreats.net/v1/repcategories"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "name": "Bot",
+      "description": "Known Infected Bot"
+    },
+    {
+      "name": "CnC",
+      "description": "Malware Command and Control Server"
+    },
+    {
+      "name": "Spam",
+      "description": "Known Spam Source"
+    }
+  ]
+}
+```
+
+This endpoint lists all of the possible categories for reputation categorization and a brief description of each item.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/repcategories`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+name | No | The name of the reputation category.
+description | No | A brief description of the category.
+
+
 # Domain Information
+
+## Get current domain reputation
+
+```shell
+curl "https://api.emergingthreats.net/v1/domains/{domain}/reputation"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "category": "DynDNS",
+      "score": 120
+    },
+    {
+      "category": "CnC",
+      "score": 100
+    },
+    {
+      "category": "SpywareCnC",
+      "score": 95
+    }
+  ]
+}
+```
+
+This endpoint retrieves the current reputation scores in categories that are currently associated with the specified domain.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/domains/{domain}/reputation`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+category | No | The category of reputation under which this score falls.
+score | No | The numerical reputation score for this category.  Scores are non-negative integers ranging from 0 to 127.
+
 
 ## Get domain malware-requested URLs
 
@@ -385,6 +479,49 @@ city | Yes | The city or town name associated with the IP.
 
 
 # IP Information
+
+## Get current IP reputation
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "category": "DynDNS",
+      "score": 120
+    },
+    {
+      "category": "CnC",
+      "score": 100
+    },
+    {
+      "category": "SpywareCnC",
+      "score": 95
+    }
+  ]
+}
+```
+
+This endpoint retrieves the current reputation scores in categories that are currently associated with the specified IP.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/ips/{ip}/reputation`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+category | No | The category of reputation under which this score falls.
+score | No | The numerical reputation score for this category.  Scores are non-negative integers ranging from 0 to 127.
+
 
 ## Get IP malware-requested URLs
 
