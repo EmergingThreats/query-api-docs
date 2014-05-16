@@ -768,14 +768,18 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"2eba8dff8d8f7a3cb2fe00b8c829a5d1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"dates"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-02 - 2014-02-02"</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6c885bee0b4ef2f539b26298b252212d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-05-13"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-05-13"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"ca00817016fcfed6f9e81062a74343da"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"dates"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-01-05 - 2014-01-05"</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8449da068aec412fbec6fd48bc675396"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-05-03"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-05-03"</span><span class="w">
     </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
@@ -795,14 +799,19 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 </tr>
 </thead><tbody>
 <tr>
-<td>md5</td>
+<td>source</td>
 <td>No</td>
 <td>The md5sum of the malware sample.</td>
 </tr>
 <tr>
-<td>dates</td>
+<td>first_seen</td>
 <td>No</td>
-<td>The dates the malware sample has been observed to have actively communicated with the specified IP.</td>
+<td>The date the malware sample was first seen associated to the IP.</td>
+</tr>
+<tr>
+<td>last_seen</td>
+<td>No</td>
+<td>The date the malware sample was last seen associated to the IP.</td>
 </tr>
 </tbody></table>
 
