@@ -13,6 +13,7 @@ includes:
   - samples
   - errors
 
+search: true
 ---
 
 # Introduction
