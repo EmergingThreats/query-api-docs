@@ -24,41 +24,25 @@ search: true
 /v1/repcategories
 
 /v1/domains/{domain}/events
-
 /v1/domains/{domain}/geoloc
-
 /v1/domains/{domain}/ips
-
 /v1/domains/{domain}/nameservers
-
 /v1/domains/{domain}/reputation
-
 /v1/domains/{domain}/samples
-
 /v1/domains/{domain}/urls
-
 /v1/domains/{domain}/whois
 
 /v1/ips/{ip}/domains
-
 /v1/ips/{ip}/events
-
 /v1/ips/{ip}/geoloc
-
 /v1/ips/{ip}/reputation
-
 /v1/ips/{ip}/samples
-
 /v1/ips/{ip}/urls
 
 /v1/samples/{md5}
-
 /v1/samples/{md5}/connections
-
 /v1/samples/{md5}/dns
-
 /v1/samples/{md5}/events
-
 /v1/samples/{md5}/http
 ```
 
