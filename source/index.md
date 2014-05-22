@@ -75,6 +75,21 @@ You must replace `SECRETKEY` with your personal API key.
 </aside>
 
 
+# Rate-limiting
+
+The IQRisk Query API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
+To increase your rate limit, contact sales.
+
+> The JSON response associated with an exceeded rate limit should look something like:
+
+```json
+{
+  "success": false,
+  "message": "Rate limit exceeded",
+  "response": {}
+}
+```
+
 # Reputation Metadata
 
 ## List reputation categories
