@@ -93,6 +93,21 @@ curl <span class="s2">"api_endpoint_here"</span>
 You must replace <code class="prettyprint">SECRETKEY</code> with your personal API key.
 </aside></p>
 
+<h1 id="rate-limiting">Rate-limiting</h1>
+
+<p>The IQRisk Query API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
+To increase your rate limit, contact sales.</p>
+
+<blockquote>
+<p>The JSON response associated with an exceeded rate limit should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rate limit exceeded"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
 <h1 id="reputation-metadata">Reputation Metadata</h1>
 
 <h2 id="list-reputation-categories">List reputation categories</h2>
@@ -1483,6 +1498,10 @@ You must replace <code class="prettyprint">SECRETKEY</code> with your personal A
 <tr>
 <td>408</td>
 <td>Request Timeout &ndash; The request took too long to complete on our side. Please reduce the amount of information you are requesting, or try again later.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Rate Limit Exceeded &ndash; You have exceeded your provisioned rate limit. If this becomes a regular occurrence, please contact sales to have your rate limit increased.</td>
 </tr>
 <tr>
 <td>500</td>
