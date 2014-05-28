@@ -611,20 +611,26 @@ To increase your rate limit, contact sales.</p>
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"74.117.114.119"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KY"</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"107.20.206.69"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VA"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ashburn"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">39.043701171875</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-77.48750305175781</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.5.1.37"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"216.38.198.78"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Costa Mesa"</span><span class="w">
+      </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CO"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henderson"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">39.88650131225586</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-104.88099670410156</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
-<p>This endpoint retrieves geolication info for a single domain.</p>
+<p>This endpoint retrieves geolocation info for a single domain.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -658,6 +664,16 @@ To increase your rate limit, contact sales.</p>
 <td>city</td>
 <td>Yes</td>
 <td>The city or town name associated with the IP.</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>Yes</td>
+<td>The latitude associated with the IP.</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>Yes</td>
+<td>The longitude associated with the IP.</td>
 </tr>
 </tbody></table>
 
@@ -964,13 +980,15 @@ To increase your rate limit, contact sales.</p>
       </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"216.38.198.78"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CO"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henderson"</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henderson"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">39.88650131225586</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-104.88099670410156</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
-<p>This endpoint retrieves geolication info for a single IP address.</p>
+<p>This endpoint retrieves geolocation info for a single IP address.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -1004,6 +1022,16 @@ To increase your rate limit, contact sales.</p>
 <td>city</td>
 <td>Yes</td>
 <td>The city or town name associated with the IP.</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>Yes</td>
+<td>The latitude associated with the IP.</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>Yes</td>
+<td>The longitude associated with the IP.</td>
 </tr>
 </tbody></table>
 
