@@ -315,20 +315,26 @@ curl "https://api.emergingthreats.net/v1/domains/{domain}/geoloc"
   "success": true,
   "response": [
     {
-      "ip": "74.117.114.119",
-      "country": "KY"
+      "ip": "107.20.206.69",
+      "country": "US",
+      "region": "VA",
+      "city": "Ashburn",
+      "latitude": 39.043701171875,
+      "longitude": -77.48750305175781
     },
     {
-      "ip": "8.5.1.37",
+      "ip": "216.38.198.78",
       "country": "US",
-      "region": "CA",
-      "city": "Costa Mesa"
+      "region": "CO",
+      "city": "Henderson",
+      "latitude": 39.88650131225586,
+      "longitude": -104.88099670410156
     }
   ]
 }
 ```
 
-This endpoint retrieves geolication info for a single domain.
+This endpoint retrieves geolocation info for a single domain.
 
 ### HTTP Request
 
@@ -342,3 +348,5 @@ ip | No | An IP associated with the specified domain.
 country | No | The country in which the IP was last observed.
 region | Yes | A two character [ISO-3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) or [FIPS 10-4](http://en.wikipedia.org/wiki/FIPS_10-4) code for the state or region associated with the IP.
 city | Yes | The city or town name associated with the IP.
+latitude | Yes | The latitude associated with the IP.
+longitude | Yes | The longitude associated with the IP.

@@ -226,13 +226,15 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/geoloc"
       "ip": "216.38.198.78",
       "country": "US",
       "region": "CO",
-      "city": "Henderson"
+      "city": "Henderson",
+      "latitude": 39.88650131225586,
+      "longitude": -104.88099670410156
     }
   ]
 }
 ```
 
-This endpoint retrieves geolication info for a single IP address.
+This endpoint retrieves geolocation info for a single IP address.
 
 ### HTTP Request
 
@@ -246,3 +248,5 @@ ip | No | The IP address specified.
 country | No | The country in which the IP was last observed.
 region | Yes | A two character [ISO-3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) or [FIPS 10-4](http://en.wikipedia.org/wiki/FIPS_10-4) code for the state or region associated with the IP.
 city | Yes | The city or town name associated with the IP.
+latitude | Yes | The latitude associated with the IP.
+longitude | Yes | The longitude associated with the IP.
