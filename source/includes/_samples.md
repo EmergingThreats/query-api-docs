@@ -211,8 +211,8 @@ date | No | The date the request was observed.
 domain | No | The domain the request was destined for.
 source_ip | No | The source IP of the http request.
 destination_ip | No | The IP the request was destined for.
-source_port | No | The source port of the traffic associated with the request.
-destination_port | No | The port the request was destined for.
+source_port | Yes | The source port of the traffic associated with the request.
+destination_port | Yes | The port the request was destined for.
 method | Yes | The HTTP method used in the request.
 url | Yes | The URL requested.
 user_agent | Yes | The user agent string associated with the request.
