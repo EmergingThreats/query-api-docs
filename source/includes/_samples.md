@@ -32,7 +32,7 @@ This endpoint retrieves metadata information for a single malware sample.
 
 Parameter | Optional? | Description
 --------- | --------- | -----------
-md5 | Yes | The MD5 hash of the binary.
+md5 | No | The MD5 hash of the binary.
 submit_date | No | The date and time the malware was originally submitted to Emerging Threats; format is yyyy-MM-dd HH:mm:ss
 file_type | Yes | 
 file_size | Yes | The size of the binary in bytes.
