@@ -13,6 +13,7 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}"
 {
   "success": true,
   "response": {
+    "md5sum": "fa86e86e9dfb7a4571b3c3091fbf4bff",
     "submit_date": "2012-06-11 04:00:00",
     "file_type": "PE32 executable for MS Windows (DLL) (console) Intel 80386 32-bit",
     "file_size": 69459,
@@ -31,6 +32,7 @@ This endpoint retrieves metadata information for a single malware sample.
 
 Parameter | Optional? | Description
 --------- | --------- | -----------
+md5 | Yes | The MD5 hash of the binary.
 submit_date | No | The date and time the malware was originally submitted to Emerging Threats; format is yyyy-MM-dd HH:mm:ss
 file_type | Yes | 
 file_size | Yes | The size of the binary in bytes.
