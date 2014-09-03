@@ -11,6 +11,7 @@ includes:
   - domains
   - ips
   - samples
+  - sids
   - errors
 
 search: true
@@ -44,6 +45,11 @@ search: true
 /v1/samples/{md5}/dns
 /v1/samples/{md5}/events
 /v1/samples/{md5}/http
+
+/v1/sids/{sid}
+/v1/sids/{sid}/ips
+/v1/sids/{sid}/domains
+/v1/sids/{sid}/samples
 ```
 
 The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.
