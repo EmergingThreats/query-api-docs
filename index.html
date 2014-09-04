@@ -61,6 +61,11 @@
 /v1/samples/{md5}/dns
 /v1/samples/{md5}/events
 /v1/samples/{md5}/http
+
+/v1/sids/{sid}
+/v1/sids/{sid}/ips
+/v1/sids/{sid}/domains
+/v1/sids/{sid}/samples
 </pre>
 
 <p>The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.</p>
@@ -1504,6 +1509,252 @@ To increase your rate limit, contact sales.</p>
 <td>signature_name</td>
 <td>Yes</td>
 <td>The name of the signature associated with this SID.</td>
+</tr>
+</tbody></table>
+
+          <h1 id="signature-information">Signature Information</h1>
+
+<h2 id="get-signature-name">Get Signature name</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="mi">2007771</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"sig_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ET TROJAN Pushdo Update URL Detected"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/sids/{sid}</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sid</td>
+<td>no</td>
+<td>Signature id that reflects request</td>
+</tr>
+<tr>
+<td>sig_name</td>
+<td>no</td>
+<td>Name of the signature requested</td>
+</tr>
+</tbody></table>
+
+<p>This endpoint retrieves the signature name for a particular Signature (SID).</p>
+
+<h2 id="get-related-ip-addresses">Get related IP addresses</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/ips"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<h3 id="request-parameters">Request Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sortBy</td>
+<td>Yes</td>
+<td>Valid values: &ldquo;ip&rdquo; and &ldquo;last_seen&rdquo;, controls the field results are ordered by. Default is &ldquo;last_seen&rdquo; if no value or invalid value provided</td>
+</tr>
+<tr>
+<td>sortDirection</td>
+<td>Yes</td>
+<td>Valid values of &ldquo;ASC&rdquo; and &ldquo;DESC&rdquo;, descending is the default if no value provided, or invalid value</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"long_ip"</span><span class="p">:</span><span class="w"> </span><span class="mi">16909060</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.2.3.4"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-04-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-05"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"long_ip"</span><span class="p">:</span><span class="w"> </span><span class="mi">16909061</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.2.3.5"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-22"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-08-17"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/sids/{sid}</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>long_ip</td>
+<td>no</td>
+<td>Long number representation of an IP address</td>
+</tr>
+<tr>
+<td>ip</td>
+<td>no</td>
+<td>Dotted notation representation of an IP address</td>
+</tr>
+<tr>
+<td>first_seen</td>
+<td>no</td>
+<td>Date the IP was first observed for this SID</td>
+</tr>
+<tr>
+<td>last_seen</td>
+<td>no</td>
+<td>Date the IP was last observed for this SID</td>
+</tr>
+</tbody></table>
+
+<p>This endpoint retrieves the IPs related to a particular Signature (SID).</p>
+
+<h2 id="get-domain-sid">Get domain SID</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/domains"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wr.example.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-04-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-05"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"domain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc.example.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-22"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-08-17"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the Domains related to a particular Signature (SID).</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/sids/{sid}</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>domain</td>
+<td>no</td>
+<td>Domain name</td>
+</tr>
+<tr>
+<td>first_seen</td>
+<td>no</td>
+<td>Date the IP was first observed for this SID</td>
+</tr>
+<tr>
+<td>last_seen</td>
+<td>no</td>
+<td>Date the IP was last observed for this SID</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-sid-related-malware-samples">Get sid related malware samples</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/samples"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"45999bfea907bf37acbab63d5d9ea683"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-13"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-13"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f75da3cd3a38aadebdcf86eb53c6eb1c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-13"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_seen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-02-13"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent malware samples that communicated with the specified sid.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/sids/{sid}/samples</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>No</td>
+<td>The md5sum of the malware sample.</td>
+</tr>
+<tr>
+<td>first_seen</td>
+<td>No</td>
+<td>The date the malware sample was first seen associated to the SID.</td>
+</tr>
+<tr>
+<td>last_seen</td>
+<td>No</td>
+<td>The date the malware sample was last seen associated to the SID.</td>
 </tr>
 </tbody></table>
 
