@@ -71,7 +71,7 @@ sortDirection | Yes | Valid values of "ASC" and "DESC", descending is the defaul
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/sids/{sid}`
+`GET https://api.emergingthreats.net/v1/sids/{sid}/ips`
 
 ### Response Parameters
 
@@ -115,7 +115,7 @@ This endpoint retrieves the Domains related to a particular Signature (SID).
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/sids/{sid}`
+`GET https://api.emergingthreats.net/v1/sids/{sid}/domains`
 
 ### Response Parameters
 
