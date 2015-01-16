@@ -219,7 +219,10 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/documentation"
     {
       "sid": 2000005,
       "summary": "This alert is triggered when an attempt is made to exploit a vulnerability in a system or application.",
-      "description": "An EXPLOIT Attempt event likely occurs when an attacker has attempted to gain unauthorized access to an asset or service by exploiting a direct vulnerability in an application or operating system. A successful exploitation of an asset or service may lead to malicious code being left behind to facilitate remote control. Further investigation may be needed to ascertain if an attacker successfully exploited this asset or service.",
+      "description": "An EXPLOIT Attempt event likely occurs when an attacker has attempted to gain
+      unauthorized access to an asset or service by exploiting a direct vulnerability in an application or
+      operating system. A successful exploitation of an asset or service may lead to malicious code being left
+      behind to facilitate remote control. Further investigation may be needed to ascertain if an attacker successfully exploited this asset or service.",
       "impact": "Compromised Server"
     }
 
@@ -257,7 +260,7 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/references"
       {
         "sid": 2001217,
         "reference_type": "CVE",
-        "reference_url": "http://cvedetails.com/cve/2004-0629",
+        "reference_url": "http://cvedetails.com/cve/2004-0629"
       },
       {
         "sid": 2001217,
@@ -268,7 +271,7 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/references"
         "sid": 2001217,
         "reference_type": "HTTP URL",
         "reference_url": "http://idefense.com/application/poi/display?id=126&type=vulnerabilities"
-      },
+      }
     ]
 
 }
