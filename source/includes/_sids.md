@@ -166,3 +166,124 @@ source | No | The md5sum of the malware sample.
 first_seen | No | The date the malware sample was first seen associated to the SID.
 last_seen | No | The date the malware sample was last seen associated to the SID.
 
+## Get Signature Text
+
+```shell
+curl "https://api.emergingthreats.net/v1/sids/{sid}/text"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success":true,
+  "response":
+    {
+      "sid":2000005,
+      "suricata_text":"alert tcp $EXTERNAL_NET any -> $HOME_NET 23 (msg:\"ET EXPLOIT Cisco Telnet Buffer Overflow\"; flow: to_server,established; content:\"|3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 61 7e 20 25 25 25 25 25 58 58|\"; threshold: type limit, track by_src, count 1, seconds 120; reference:url,www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml; reference:url,doc.emergingthreats.net/bin/view/Main/2000005; classtype:attempted-dos; sid:2000005; rev:7;)",
+      "snort_text":"alert tcp $EXTERNAL_NET any -> $HOME_NET 23 (msg:\"ET EXPLOIT Cisco Telnet Buffer Overflow\"; flow: to_server,established; content:\"|3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 61 7e 20 25 25 25 25 25 58 58|\"; detection_filter: track by_src, count 1, seconds 120; reference:url,www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml; reference:url,doc.emergingthreats.net/bin/view/Main/2000005; classtype:attempted-dos; sid:2000005; rev:8;)"
+    }
+}
+```
+
+This endpoint retrieves the most recent documentation available for the specified sid.  If you do not have access to the rule requested (i.e. the rule is for ETPro and you do not
+have an ETPro subscription, this will return a 403 Forbidden.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/sids/{sid}/text`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+sid | No | Sid that was requested
+suricata_text | Yes | Example of the rule for Suricata
+snort_text | Yes | Example of rule for Snort 2.9
+
+
+## Get Signature documentation
+
+```shell
+curl "https://api.emergingthreats.net/v1/sids/{sid}/documentation"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response":
+    {
+      "sid": 2000005,
+      "summary": "This alert is triggered when an attempt is made to exploit a vulnerability in a system or application.",
+      "description": "An EXPLOIT Attempt event likely occurs when an attacker has attempted to gain unauthorized access to an asset or service by exploiting a direct vulnerability in an application or operating system. A successful exploitation of an asset or service may lead to malicious code being left behind to facilitate remote control. Further investigation may be needed to ascertain if an attacker successfully exploited this asset or service.",
+      "impact": "Compromised Server"
+    }
+
+}
+```
+This endpoint retrieves the most recent documentation available for the specified sid.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/sids/{sid}/documentation`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+sid | No | Sid that was requested
+summary | No | Summary of the information this alert is trying to convey.
+description | No | Detailed description of the exploit being caught.
+impact | No | What kinds of systems does this impact
+
+## Get Signature references
+
+```shell
+curl "https://api.emergingthreats.net/v1/sids/{sid}/references"
+  -H "Authorization: SECRETKEY"
+```
+
+> The JSON response should look something like:
+
+```json
+{
+  "success": true,
+  "response":
+    [
+      {
+        "sid": 2001217,
+        "reference_type": "CVE",
+        "reference_url": "http://cvedetails.com/cve/2004-0629",
+      },
+      {
+        "sid": 2001217,
+        "reference_type": "HTTP URL",
+        "reference_url": "http://www.securiteam.com/windowsntfocus/5BP0D20DPW.html"
+      },
+      {
+        "sid": 2001217,
+        "reference_type": "HTTP URL",
+        "reference_url": "http://idefense.com/application/poi/display?id=126&type=vulnerabilities"
+      },
+    ]
+
+}
+```
+This endpoint retrieves lookup references for this SID.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/sids/{sid}/documentation`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+sid | No | Sid that was requested
+summary | No | Summary of the information this alert is trying to convey.
+description | No | Detailed description of the exploit being caught.
+impact | No | What kinds of systems does this impact
