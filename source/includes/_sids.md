@@ -225,7 +225,6 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/documentation"
       behind to facilitate remote control. Further investigation may be needed to ascertain if an attacker successfully exploited this asset or service.",
       "impact": "Compromised Server"
     }
-
 }
 ```
 This endpoint retrieves the most recent documentation available for the specified sid.
@@ -254,26 +253,20 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/references"
 
 ```json
 {
-  "success": true,
+  "success":true,
   "response":
     [
       {
-        "sid": 2001217,
-        "reference_type": "CVE",
-        "reference_url": "http://cvedetails.com/cve/2004-0629"
+        "sid":2000005,
+        "reference_type":"HTTP URL",
+        "reference_url":"http://doc.emergingthreats.net/bin/view/Main/2000005"
       },
       {
-        "sid": 2001217,
-        "reference_type": "HTTP URL",
-        "reference_url": "http://www.securiteam.com/windowsntfocus/5BP0D20DPW.html"
-      },
-      {
-        "sid": 2001217,
-        "reference_type": "HTTP URL",
-        "reference_url": "http://idefense.com/application/poi/display?id=126&type=vulnerabilities"
+        "sid":2000005,
+        "reference_type":"HTTP URL",
+        "reference_url":"http://www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml"
       }
     ]
-
 }
 ```
 This endpoint retrieves lookup references for this SID.
