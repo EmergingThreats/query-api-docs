@@ -16,7 +16,7 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}"
     "sid": 2007771,
     "sig_name": "ET TROJAN Pushdo Update URL Detected"
   }
-  
+
 }
 ```
 
@@ -84,7 +84,7 @@ last_seen | no | Date the IP was last observed for this SID
 
 This endpoint retrieves the IPs related to a particular Signature (SID).
 
-## Get domain SID 
+## Get domain SID
 
 ```shell
 curl "https://api.emergingthreats.net/v1/sids/{sid}/domains"
@@ -273,7 +273,7 @@ This endpoint retrieves lookup references for this SID.
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/sids/{sid}/documentation`
+`GET https://api.emergingthreats.net/v1/sids/{sid}/references`
 
 ### Response Parameters
 
