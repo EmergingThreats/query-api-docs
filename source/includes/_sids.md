@@ -280,6 +280,3 @@ This endpoint retrieves lookup references for this SID.
 Parameter | Optional? | Description
 --------- | --------- | -----------
 sid | No | Sid that was requested
-summary | No | Summary of the information this alert is trying to convey.
-description | No | Detailed description of the exploit being caught.
-impact | No | What kinds of systems does this impact
