@@ -257,14 +257,13 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/references"
   "response":
     [
       {
-        "sid":2000005,
-        "reference_type":"HTTP URL",
-        "reference_url":"http://doc.emergingthreats.net/bin/view/Main/2000005"
-      },
-      {
-        "sid":2000005,
-        "reference_type":"HTTP URL",
-        "reference_url":"http://www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml"
+        "reference_type":"url",
+        "reference_description":"HTTP URL",
+        "reference_urls":
+          [
+            "http://doc.emergingthreats.net/bin/view/Main/2000005",
+            "http://www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml"
+          ]
       }
     ]
 }
@@ -279,4 +278,6 @@ This endpoint retrieves lookup references for this SID.
 
 Parameter | Optional? | Description
 --------- | --------- | -----------
-sid | No | Sid that was requested
+reference_type | No | The type of reference this refers to, as a key
+reference_description | No | Plain text description of the reference type
+reference_urls | No | List of urls to references
