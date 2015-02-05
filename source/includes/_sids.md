@@ -7,6 +7,14 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}"
   -H "Authorization: SECRETKEY"
 ```
 
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/sids/{sid}")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
+```
+
 > The JSON response should look something like:
 
 ```json
@@ -38,6 +46,14 @@ This endpoint retrieves the signature name for a particular Signature (SID).
 ```shell
 curl "https://api.emergingthreats.net/v1/sids/{sid}/ips"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/sids/{sid}/ips")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 ### Request Parameters
@@ -91,6 +107,14 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/domains"
   -H "Authorization: SECRETKEY"
 ```
 
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/sids/{sid}/domains")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
+```
+
 > The JSON response should look something like:
 
 ```json
@@ -130,6 +154,14 @@ last_seen | no | Date the IP was last observed for this SID
 ```shell
 curl "https://api.emergingthreats.net/v1/sids/{sid}/samples"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/sids/{sid}/samples")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
@@ -173,6 +205,14 @@ curl "https://api.emergingthreats.net/v1/sids/{sid}/text"
   -H "Authorization: SECRETKEY"
 ```
 
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/sids/{sid}/text")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
+```
+
 > The JSON response should look something like:
 
 ```json
@@ -208,6 +248,14 @@ snort_text | Yes | Example of rule for Snort 2.9
 ```shell
 curl "https://api.emergingthreats.net/v1/sids/{sid}/documentation"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/sids/{sid}/documentation")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
@@ -247,6 +295,15 @@ impact | No | What kinds of systems does this impact
 ```shell
 curl "https://api.emergingthreats.net/v1/sids/{sid}/references"
   -H "Authorization: SECRETKEY"
+```
+
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/sids/{sid}/references")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:

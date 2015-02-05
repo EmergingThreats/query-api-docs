@@ -7,6 +7,14 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}"
   -H "Authorization: SECRETKEY"
 ```
 
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
+```
+
 > The JSON response should look something like:
 
 ```json
@@ -34,7 +42,7 @@ Parameter | Optional? | Description
 --------- | --------- | -----------
 md5 | No | The MD5 hash of the binary.
 submit_date | No | The date and time the malware was originally submitted to Emerging Threats; format is yyyy-MM-dd HH:mm:ss
-file_type | Yes | 
+file_type | Yes |
 file_size | Yes | The size of the binary in bytes.
 sha256 | Yes | The SHA-256 hash of the binary.
 
@@ -43,6 +51,14 @@ sha256 | Yes | The SHA-256 hash of the binary.
 ```shell
 curl "https://api.emergingthreats.net/v1/samples/{md5}/connections"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/connections")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
@@ -116,6 +132,14 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}/dns"
   -H "Authorization: SECRETKEY"
 ```
 
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/dns")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
+```
+
 > The JSON response should look something like:
 
 ```json
@@ -162,6 +186,14 @@ record_type | Yes | The DNS record type (e.g. A, CNAME, etc.)
 ```shell
 curl "https://api.emergingthreats.net/v1/samples/{md5}/http"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/http")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
@@ -224,6 +256,14 @@ user_agent | Yes | The user agent string associated with the request.
 ```shell
 curl "https://api.emergingthreats.net/v1/samples/{md5}/events"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/events")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
