@@ -2,7 +2,8 @@
 title: IQRisk Query API Reference
 
 language_tabs:
-  - curl
+  - shell
+  - python: Python (2.x)
 
 toc_footers:
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
@@ -68,6 +69,12 @@ curl "api_endpoint_here"
   -H "Authorization: SECRETKEY"
 ```
 
+```python
+from urllib2 import Request, urlopen
+request = Request("api_endpoint_here")
+request.add_header("Authorization", "SECRETKEY")
+```
+
 > Make sure to replace `SECRETKEY` with your API key.
 
 Emerging Threats uses API keys to allow access to our API. If your company has paid for API access, you can find your API key by visiting [https://portal.emergingthreats.net/api-access](https://portal.emergingthreats.net/api-access).
@@ -103,6 +110,14 @@ To increase your rate limit, contact sales.
 ```shell
 curl "https://api.emergingthreats.net/v1/repcategories"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/repcategories")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:

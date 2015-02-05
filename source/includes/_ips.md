@@ -5,6 +5,14 @@
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
   -H "Authorization: SECRETKEY"
+  ```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/domains/{ip}/reputation")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
@@ -50,6 +58,15 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/urls"
   -H "Authorization: SECRETKEY"
 ```
 
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/domains/{ip}/urls")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
+```
+
 > The JSON response should look something like:
 
 ```json
@@ -80,6 +97,14 @@ url | No | The url string of the request with query parameter values masked.
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/samples"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/domains/{ip}/samples")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
@@ -123,6 +148,14 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/domains"
   -H "Authorization: SECRETKEY"
 ```
 
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/domains/{ip}/domains")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
+```
+
 > The JSON response should look something like:
 
 ```json
@@ -153,7 +186,7 @@ This endpoint retrieves the most recent domains that have been associated with t
 
 Parameter | Optional? | Description
 --------- | --------- | -----------
-domain | No | 
+domain | No |
 first_seen | No | The date the domain was first seen associated to the IP.
 last_seen | No | The date the domain was last seen associated to the IP.
 
@@ -163,6 +196,14 @@ last_seen | No | The date the domain was last seen associated to the IP.
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/events"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/domains/{ip}/events")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
@@ -214,6 +255,14 @@ count | No | How many times this particular IDS event was observed in our sensor
 ```shell
 curl "https://api.emergingthreats.net/v1/ips/{ip}/geoloc"
   -H "Authorization: SECRETKEY"
+```
+
+```python
+from urllib2 import Request, urlopen
+request = Request("https://api.emergingthreats.net/v1/domains/{ip}/geoloc")
+request.add_header("Authorization", "SECRETKEY")
+result = urlopen(request)
+print result.read()
 ```
 
 > The JSON response should look something like:
