@@ -12,7 +12,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["curl"]);
+          setupLanguages(["shell","python"]);
         });
       </script>
   </head>
@@ -83,6 +83,10 @@
 curl <span class="s2">"api_endpoint_here"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"api_endpoint_here"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+</pre>
 
 <blockquote>
 <p>Make sure to replace <code class="prettyprint">SECRETKEY</code> with your API key.</p>
@@ -118,6 +122,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="list-reputation-categories">List reputation categories</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/repcategories"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/repcategories"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -175,6 +185,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -229,6 +245,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/urls"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/urls"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -268,6 +290,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-domain-related-malware-samples">Get domain related malware samples</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/samples"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">equest</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/samples"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -326,6 +354,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/ips"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/ips"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -382,6 +416,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-domain-related-ids-events">Get domain related IDS events</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/events"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/events"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -461,6 +501,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/nameservers"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/nameservers"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -517,6 +563,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-domain-whois-info">Get domain whois info</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/whois"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/whois"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -608,6 +660,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/geoloc"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{domain}/geoloc"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -688,6 +746,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/reputation"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/reputation"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -742,6 +806,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/urls"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/urls"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -781,6 +851,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-ip-related-malware-samples">Get IP related malware samples</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/samples"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/samples"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -839,6 +915,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/domains"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/domains"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -895,6 +977,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-ip-related-ids-events">Get IP related IDS events</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/events"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/events"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -974,6 +1062,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/ips/{ip}/geoloc"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/geoloc"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -1046,6 +1140,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/samples/{md5}"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -1107,6 +1207,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-sample-connections">Get sample connections</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/connections"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/samples/{md5}/connections"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -1235,6 +1341,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/dns"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/samples/{md5}/dns"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -1310,6 +1422,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-sample-http-requests">Get sample http requests</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/http"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/samples/{md5}/http"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <blockquote>
@@ -1417,6 +1535,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/samples/{md5}/events"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/samples/{md5}/events"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -1518,6 +1642,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/sids/{sid}"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -1562,6 +1692,12 @@ To increase your rate limit, contact sales.</p>
 <h2 id="get-related-ip-addresses">Get related IP addresses</h2>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/ips"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/sids/{sid}/ips"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre>
 
 <h3 id="request-parameters">Request Parameters</h3>
@@ -1648,6 +1784,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/domains"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/sids/{sid}/domains"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -1705,6 +1847,12 @@ To increase your rate limit, contact sales.</p>
 <pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/samples"</span>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/sids/{sid}/samples"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
 
 <blockquote>
 <p>The JSON response should look something like:</p>
@@ -1758,6 +1906,193 @@ To increase your rate limit, contact sales.</p>
 </tr>
 </tbody></table>
 
+<h2 id="get-signature-text">Get Signature Text</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/text"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/sids/{sid}/text"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="mi">2000005</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"suricata_text"</span><span class="p">:</span><span class="s2">"alert tcp $EXTERNAL_NET any -&gt; $HOME_NET 23 (msg:\"ET EXPLOIT Cisco Telnet Buffer Overflow\"; flow: to_server,established; content:\"|3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 61 7e 20 25 25 25 25 25 58 58|\"; threshold: type limit, track by_src, count 1, seconds 120; reference:url,www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml; reference:url,doc.emergingthreats.net/bin/view/Main/2000005; classtype:attempted-dos; sid:2000005; rev:7;)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"snort_text"</span><span class="p">:</span><span class="s2">"alert tcp $EXTERNAL_NET any -&gt; $HOME_NET 23 (msg:\"ET EXPLOIT Cisco Telnet Buffer Overflow\"; flow: to_server,established; content:\"|3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 3f 61 7e 20 25 25 25 25 25 58 58|\"; detection_filter: track by_src, count 1, seconds 120; reference:url,www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml; reference:url,doc.emergingthreats.net/bin/view/Main/2000005; classtype:attempted-dos; sid:2000005; rev:8;)"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent documentation available for the specified sid.  If you do not have access to the rule requested (i.e. the rule is for ETPro and you do not
+have an ETPro subscription, this will return a 403 Forbidden.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/sids/{sid}/text</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sid</td>
+<td>No</td>
+<td>Sid that was requested</td>
+</tr>
+<tr>
+<td>suricata_text</td>
+<td>Yes</td>
+<td>Example of the rule for Suricata</td>
+</tr>
+<tr>
+<td>snort_text</td>
+<td>Yes</td>
+<td>Example of rule for Snort 2.9</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-signature-documentation">Get Signature documentation</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/documentation"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/sids/{sid}/documentation"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"sid"</span><span class="p">:</span><span class="w"> </span><span class="mi">2000005</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This alert is triggered when an attempt is made to exploit a vulnerability in a system or application."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An EXPLOIT Attempt event likely occurs when an attacker has attempted to gain
+      unauthorized access to an asset or service by exploiting a direct vulnerability in an application or
+      operating system. A successful exploitation of an asset or service may lead to malicious code being left
+      behind to facilitate remote control. Further investigation may be needed to ascertain if an attacker successfully exploited this asset or service."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compromised Server"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves the most recent documentation available for the specified sid.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/sids/{sid}/documentation</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sid</td>
+<td>No</td>
+<td>Sid that was requested</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>No</td>
+<td>Summary of the information this alert is trying to convey.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>No</td>
+<td>Detailed description of the exploit being caught.</td>
+</tr>
+<tr>
+<td>impact</td>
+<td>No</td>
+<td>What kinds of systems does this impact</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-signature-references">Get Signature references</h2>
+<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/sids/{sid}/references"</span>
+  -H <span class="s2">"Authorization: SECRETKEY"</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/sids/{sid}/references"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre>
+
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response"</span><span class="p">:</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"reference_type"</span><span class="p">:</span><span class="s2">"url"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"reference_description"</span><span class="p">:</span><span class="s2">"HTTP URL"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"reference_urls"</span><span class="p">:</span><span class="w">
+          </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"http://doc.emergingthreats.net/bin/view/Main/2000005"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"http://www.cisco.com/warp/public/707/cisco-sn-20040326-exploits.shtml"</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves lookup references for this SID.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.emergingthreats.net/v1/sids/{sid}/references</code></p>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>reference_type</td>
+<td>No</td>
+<td>The type of reference this refers to, as a key</td>
+</tr>
+<tr>
+<td>reference_description</td>
+<td>No</td>
+<td>Plain text description of the reference type</td>
+</tr>
+<tr>
+<td>reference_urls</td>
+<td>No</td>
+<td>List of urls to references</td>
+</tr>
+</tbody></table>
+
           <h1 id="errors">Errors</h1>
 
 <p>The IQRisk Query API uses the following error codes:</p>
@@ -1797,7 +2132,8 @@ To increase your rate limit, contact sales.</p>
       </div>
       <div class="dark-box">
           <div id="lang-selector">
-                <a href="#" data-language-name="curl">curl</a>
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="python">Python (2.x)</a>
           </div>
       </div>
     </div>
