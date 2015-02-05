@@ -2,7 +2,7 @@
 title: IQRisk Query API Reference
 
 language_tabs:
-  - curl
+  - shell
 
 toc_footers:
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
