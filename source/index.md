@@ -65,8 +65,7 @@ We currently have code examples using curl, and are working on other language ex
 
 ```shell
 # With curl, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: SECRETKEY"
+curl https://api.emergingthreats.net/v1/repcategories -H "Authorization: SECRETKEY"
 ```
 
 ```python
@@ -108,8 +107,7 @@ To increase your rate limit, contact sales.
 ## List reputation categories
 
 ```shell
-curl "https://api.emergingthreats.net/v1/repcategories"
-  -H "Authorization: SECRETKEY"
+curl https://api.emergingthreats.net/v1/repcategories -H "Authorization: SECRETKEY"
 ```
 
 ```python
