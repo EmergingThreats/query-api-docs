@@ -57,7 +57,7 @@ The IQRisk Query API is organized around REST with JSON responses. Our API is de
 
 The IQRisk Query API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 100 million malware samples.
 
-We currently have code examples using curl, and are working on other language examples. If you have a particular language you'd like to see API examples for, please let us know. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We currently have code examples using curl and Python. If you have a particular language you'd like to see API examples for, please let us know. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Authentication
 
