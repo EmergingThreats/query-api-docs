@@ -80,8 +80,7 @@
 <p>To authenticate, use this code:</p>
 </blockquote>
 <pre class="highlight shell"><span class="c"># With curl, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
+curl https://api.emergingthreats.net/v1/repcategories -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
 <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"api_endpoint_here"</span><span class="p">)</span>
@@ -120,8 +119,7 @@ To increase your rate limit, contact sales.</p>
 <h1 id="reputation-metadata">Reputation Metadata</h1>
 
 <h2 id="list-reputation-categories">List reputation categories</h2>
-<pre class="highlight shell">curl <span class="s2">"https://api.emergingthreats.net/v1/repcategories"</span>
-  -H <span class="s2">"Authorization: SECRETKEY"</span>
+<pre class="highlight shell">curl https://api.emergingthreats.net/v1/repcategories -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
 <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/repcategories"</span><span class="p">)</span>
@@ -675,7 +673,8 @@ To increase your rate limit, contact sales.</p>
   </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"107.20.206.69"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VA"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ashburn"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">39.043701171875</span><span class="p">,</span><span class="w">
@@ -683,7 +682,8 @@ To increase your rate limit, contact sales.</p>
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"216.38.198.78"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CO"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henderson"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">39.88650131225586</span><span class="p">,</span><span class="w">
@@ -714,8 +714,13 @@ To increase your rate limit, contact sales.</p>
 <td>An IP associated with the specified domain.</td>
 </tr>
 <tr>
-<td>country</td>
+<td>country_code</td>
 <td>No</td>
+<td>The two character <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country code in which the IP was last observed.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>Yes</td>
 <td>The country in which the IP was last observed.</td>
 </tr>
 <tr>
@@ -1077,7 +1082,8 @@ To increase your rate limit, contact sales.</p>
   </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"216.38.198.78"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CO"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Henderson"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">39.88650131225586</span><span class="p">,</span><span class="w">
@@ -1108,8 +1114,13 @@ To increase your rate limit, contact sales.</p>
 <td>The IP address specified.</td>
 </tr>
 <tr>
-<td>country</td>
+<td>country_code</td>
 <td>No</td>
+<td>The two character <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country code in which the IP was last observed.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>Yes</td>
 <td>The country in which the IP was last observed.</td>
 </tr>
 <tr>
