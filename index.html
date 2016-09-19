@@ -752,7 +752,7 @@ To increase your rate limit, contact sales.</p>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/reputation"</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/ips/{ip}/reputation"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -812,7 +812,7 @@ To increase your rate limit, contact sales.</p>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/urls"</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/ips/{ip}/urls"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -858,7 +858,7 @@ To increase your rate limit, contact sales.</p>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/samples"</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/ips/{ip}/samples"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -921,7 +921,7 @@ To increase your rate limit, contact sales.</p>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/domains"</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/ips/{ip}/domains"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -984,7 +984,7 @@ To increase your rate limit, contact sales.</p>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/events"</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/ips/{ip}/events"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -1068,7 +1068,7 @@ To increase your rate limit, contact sales.</p>
   -H <span class="s2">"Authorization: SECRETKEY"</span>
 </pre>
 <pre class="highlight python"><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/domains/{ip}/geoloc"</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"https://api.emergingthreats.net/v1/ips/{ip}/geoloc"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"SECRETKEY"</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
