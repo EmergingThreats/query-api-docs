@@ -9,7 +9,7 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/domains/{ip}/reputation")
+request = Request("https://api.emergingthreats.net/v1/ips/{ip}/reputation")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -61,7 +61,7 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/urls"
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/domains/{ip}/urls")
+request = Request("https://api.emergingthreats.net/v1/ips/{ip}/urls")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -101,7 +101,7 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/samples"
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/domains/{ip}/samples")
+request = Request("https://api.emergingthreats.net/v1/ips/{ip}/samples")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -150,7 +150,7 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/domains"
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/domains/{ip}/domains")
+request = Request("https://api.emergingthreats.net/v1/ips/{ip}/domains")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -200,7 +200,7 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/events"
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/domains/{ip}/events")
+request = Request("https://api.emergingthreats.net/v1/ips/{ip}/events")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -259,7 +259,7 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/geoloc"
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/domains/{ip}/geoloc")
+request = Request("https://api.emergingthreats.net/v1/ips/{ip}/geoloc")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
