@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>IQRisk Query API Reference</title>
+    <title>ET Intelligence API Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -151,9 +151,9 @@
 /v1/sids/{sid}/domains
 /v1/sids/{sid}/samples
 </code></pre>
-<p>The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.</p>
+<p>The ET Intelligence API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.</p>
 
-<p>The IQRisk Query API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 100 million malware samples.</p>
+<p>The ET Intelligence API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 300 million malware samples.</p>
 
 <p>We currently have code examples using curl and Python. If you have a particular language you&rsquo;d like to see API examples for, please let us know. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 
@@ -172,7 +172,7 @@ curl https://api.emergingthreats.net/v1/repcategories -H <span class="s2">"Autho
 <p>Make sure to replace <code class="prettyprint">SECRETKEY</code> with your API key.</p>
 </blockquote>
 
-<p>Emerging Threats uses API keys to allow access to our API. If your company has paid for API access, you can find your API key by visiting <a href="https://portal.emergingthreats.net/api-access">https://portal.emergingthreats.net/api-access</a>.</p>
+<p>Emerging Threats uses API keys to allow access to our API. If your company has paid for API access, you can find your API key by visiting <a href="https://etadmin.proofpoint.com/api-access">https://etadmin.proofpoint.com/api-access</a>.</p>
 
 <p>The Query API expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
 
@@ -184,7 +184,7 @@ You must replace `SECRETKEY` with your personal API key.
 
 <h1 id="rate-limiting">Rate-limiting</h1>
 
-<p>The IQRisk Query API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
+<p>The ET Intelligence API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
 To increase your rate limit, contact sales.</p>
 
 <blockquote>
@@ -2105,7 +2105,7 @@ have an ETPro subscription, this will return a 403 Forbidden.</p>
 
           <h1 id="errors">Errors</h1>
 
-<p>The IQRisk Query API uses the following error codes:</p>
+<p>The ET Intelligence API uses the following error codes:</p>
 
 <table><thead>
 <tr>
