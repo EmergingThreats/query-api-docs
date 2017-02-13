@@ -1,5 +1,5 @@
 ---
-title: IQRisk Query API Reference
+title: ET Intelligence API Reference
 
 language_tabs:
   - shell
@@ -53,9 +53,9 @@ search: true
 /v1/sids/{sid}/samples
 ```
 
-The IQRisk Query API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.
+The ET Intelligence API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.
 
-The IQRisk Query API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 100 million malware samples.
+The ET Intelligence API can be used to get information such as up-to-date reputation of domains and IPs, as well as related information on our entire database of over 300 million malware samples.
 
 We currently have code examples using curl and Python. If you have a particular language you'd like to see API examples for, please let us know. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
@@ -76,7 +76,7 @@ request.add_header("Authorization", "SECRETKEY")
 
 > Make sure to replace `SECRETKEY` with your API key.
 
-Emerging Threats uses API keys to allow access to our API. If your company has paid for API access, you can find your API key by visiting [https://portal.emergingthreats.net/api-access](https://portal.emergingthreats.net/api-access).
+Emerging Threats uses API keys to allow access to our API. If your company has paid for API access, you can find your API key by visiting [https://etadmin.proofpoint.com/api-access](https://etadmin.proofpoint.com/api-access).
 
 The Query API expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
@@ -89,7 +89,7 @@ You must replace `SECRETKEY` with your personal API key.
 
 # Rate-limiting
 
-The IQRisk Query API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
+The ET Intelligence API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
 To increase your rate limit, contact sales.
 
 > The JSON response associated with an exceeded rate limit should look something like:

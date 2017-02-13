@@ -1,6 +1,6 @@
 # Errors
 
-The IQRisk Query API uses the following error codes:
+The ET Intelligence API uses the following error codes:
 
 Error Code | Meaning
 ---------- | -------
