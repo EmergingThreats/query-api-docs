@@ -1,6 +1,6 @@
 # Malware Samples
 
-The API supports malware lookup by `MD5` and `SHA256`. 
+The API supports malware sample lookup by `MD5` and `SHA256`. 
 
 In the examples below `{hash}` can be either `MD5` or `SHA256`.
 
