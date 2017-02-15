@@ -42,10 +42,10 @@ search: true
 /v1/ips/{ip}/urls
 
 /v1/samples/{hash}
-/v1/samples/{hash}/connections
-/v1/samples/{hash}/dns
-/v1/samples/{hash}/events
-/v1/samples/{hash}/http
+/v1/samples/{md5}/connections
+/v1/samples/{md5}/dns
+/v1/samples/{md5}/events
+/v1/samples/{md5}/http
 
 /v1/sids/{sid}
 /v1/sids/{sid}/ips
