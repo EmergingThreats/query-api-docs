@@ -53,13 +53,13 @@ sha256 | Yes | The SHA-256 hash of the binary.
 ## Get sample connections
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/{hash}/connections"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/connections"
   -H "Authorization: SECRETKEY"
 ```
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{hash}/connections")
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/connections")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -109,7 +109,7 @@ This endpoint retrieves the most recent connections an individual malware sample
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/{hash}/connections`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/connections`
 
 ### Response Parameters
 
@@ -132,13 +132,13 @@ protocol | Yes | The communication protocol associated with this connection (e.g
 ## Get sample dns lookups
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/{hash}/dns"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/dns"
   -H "Authorization: SECRETKEY"
 ```
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{hash}/dns")
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/dns")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -172,7 +172,7 @@ This endpoint retrieves the most recent dns lookups an individual malware sample
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/{hash}/dns`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/dns`
 
 ### Response Parameters
 
@@ -188,13 +188,13 @@ record_type | Yes | The DNS record type (e.g. A, CNAME, etc.)
 ## Get sample http requests
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/{hash}/http"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/http"
   -H "Authorization: SECRETKEY"
 ```
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{hash}/http")
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/http")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -238,7 +238,7 @@ This endpoint retrieves the most recent http requests an individual malware samp
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/{hash}/http`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/http`
 
 ### Response Parameters
 
@@ -258,13 +258,13 @@ user_agent | Yes | The user agent string associated with the request.
 ## Get sample IDS events
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/{hash}/events"
+curl "https://api.emergingthreats.net/v1/samples/{md5}/events"
   -H "Authorization: SECRETKEY"
 ```
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{hash}/events")
+request = Request("https://api.emergingthreats.net/v1/samples/{md5}/events")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -306,7 +306,7 @@ This endpoint retrieves the most recent IDS events an individual malware sample 
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/{hash}/events`
+`GET https://api.emergingthreats.net/v1/samples/{md5}/events`
 
 ### Response Parameters
 
