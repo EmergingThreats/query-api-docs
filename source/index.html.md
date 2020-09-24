@@ -1,12 +1,12 @@
 ---
 title: ET Intelligence API Reference
 
-language_tabs:
+language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - python: Python (2.x)
 
 toc_footers:
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
   - domains
@@ -16,6 +16,8 @@ includes:
   - errors
 
 search: true
+
+code_clipboard: true
 ---
 
 # Introduction
