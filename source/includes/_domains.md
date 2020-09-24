@@ -31,7 +31,7 @@ print result.read()
     },
     {
       "category": "SpywareCnC",
-      "score": 95
+      "score": 90
     }
   ]
 }
