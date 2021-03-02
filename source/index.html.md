@@ -43,7 +43,7 @@ code_clipboard: true
 /v1/ips/{ip}/samples
 /v1/ips/{ip}/urls
 
-/v1/samples/{md5}
+/v1/samples/{hash}
 /v1/samples/{md5}/connections
 /v1/samples/{md5}/dns
 /v1/samples/{md5}/events

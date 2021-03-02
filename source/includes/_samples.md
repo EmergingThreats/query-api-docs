@@ -1,15 +1,19 @@
 # Malware Samples
 
+The API supports malware sample lookup by `MD5` and `SHA256`. 
+
+In the examples below `{hash}` can be either `MD5` or `SHA256`.
+
 ## Get sample details
 
 ```shell
-curl "https://api.emergingthreats.net/v1/samples/{md5}"
+curl "https://api.emergingthreats.net/v1/samples/{hash}"
   -H "Authorization: SECRETKEY"
 ```
 
 ```python
 from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{md5}")
+request = Request("https://api.emergingthreats.net/v1/samples/{hash}")
 request.add_header("Authorization", "SECRETKEY")
 result = urlopen(request)
 print result.read()
@@ -34,7 +38,7 @@ This endpoint retrieves metadata information for a single malware sample.
 
 ### HTTP Request
 
-`GET https://api.emergingthreats.net/v1/samples/{md5}`
+`GET https://api.emergingthreats.net/v1/samples/{hash}`
 
 ### Response Parameters
 
