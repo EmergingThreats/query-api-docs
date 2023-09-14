@@ -8,11 +8,12 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
   ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/ips/{ip}/reputation")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/ips/{ip}/reputation"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -60,11 +61,12 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/urls"
 
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/ips/{ip}/urls")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/ips/{ip}/urls"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -100,11 +102,12 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/samples"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/ips/{ip}/samples")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/ips/{ip}/samples"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -149,11 +152,12 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/domains"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/ips/{ip}/domains")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/ips/{ip}/domains"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -199,11 +203,12 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/events"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/ips/{ip}/events")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/ips/{ip}/events"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -258,11 +263,12 @@ curl "https://api.emergingthreats.net/v1/ips/{ip}/geoloc"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/ips/{ip}/geoloc")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/ips/{ip}/geoloc"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -301,3 +307,53 @@ region | Yes | A two character [ISO-3166-2](http://en.wikipedia.org/wiki/ISO_316
 city | Yes | The city or town name associated with the IP.
 latitude | Yes | The latitude associated with the IP.
 longitude | Yes | The longitude associated with the IP.
+
+
+## Get IP ASN Info <sup>New</sup>
+
+```shell
+curl "https://api.emergingthreats.net/v1/ips/{ip}/asn"
+  -H "Authorization: SECRETKEY"
+```
+
+```python
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/ips/{ip}/asn"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+> The JSON response should look something like:
+
+```json
+{
+    "success": true,
+    "response": {
+        "asn": 15169,
+        "owner": "GOOGLE",
+        "authorizer": "arin",
+        "country": "US",
+        "registration_date": "2000-03-30",
+        "reverse_lookup": "google-public-dns-a.google.com"
+    }
+}
+```
+
+This endpoint retrieves asn info for a single IP address.
+
+### HTTP Request
+
+`GET https://api.emergingthreats.net/v1/ips/{ip}/asn`
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+asn | No | The 16 bit autonomous system number (ASN).
+owner | No | The owner of the ASN.
+authorizer | Yes | The authorizing body of ASN.
+country | Yes | The country of origin.
+registration_date | Yes | The date of ASN registration.
+reverse_lookup | Yes | The reverse lookup address for an ASN.
