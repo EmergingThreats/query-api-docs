@@ -3,17 +3,21 @@ title: ET Intelligence API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - python: Python (2.x)
+  - python: Python (3.x)
 
 toc_footers:
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
+  - cve
   - domains
   - ips
+  - malware
   - samples
   - sids
+  - threatactors
   - errors
+  
 
 search: true
 
@@ -26,6 +30,9 @@ code_clipboard: true
 
 ```plaintext
 /v1/repcategories
+
+/v1/cve/{cve}
+/v1/cve/top-trending
 
 /v1/domains/{domain}/events
 /v1/domains/{domain}/geoloc
@@ -43,6 +50,7 @@ code_clipboard: true
 /v1/ips/{ip}/samples
 /v1/ips/{ip}/urls
 
+/v1/malare/{malware_family}
 /v1/samples/{md5}
 /v1/samples/{md5}/connections
 /v1/samples/{md5}/dns
@@ -53,6 +61,8 @@ code_clipboard: true
 /v1/sids/{sid}/ips
 /v1/sids/{sid}/domains
 /v1/sids/{sid}/samples
+
+/v1/actors/{threatactor}
 ```
 
 The ET Intelligence API is organized around REST with JSON responses. Our API is designed to use HTTP response codes to indicate API success/errors. We support cross-origin resource sharing (CORS) to allow you to interact with our API from a client-side web application. JSON will be returned in all responses from the API.
@@ -71,9 +81,11 @@ curl https://api.emergingthreats.net/v1/repcategories -H "Authorization: SECRETK
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("api_endpoint_here")
-request.add_header("Authorization", "SECRETKEY")
+import requests
+api_key = "SECRETKEY"
+url = "api_endpoint_here"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
 ```
 
 > Make sure to replace `SECRETKEY` with your API key.
@@ -113,11 +125,12 @@ curl https://api.emergingthreats.net/v1/repcategories -H "Authorization: SECRETK
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/repcategories")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/repcategories"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:

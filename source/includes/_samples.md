@@ -8,11 +8,12 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{md5}")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/samples/{md5}"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -54,11 +55,12 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}/connections"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{md5}/connections")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/samples/{md5}/connections"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -133,11 +135,12 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}/dns"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{md5}/dns")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/samples/{md5}/dns"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -189,11 +192,12 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}/http"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{md5}/http")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/samples/{md5}/http"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
@@ -259,11 +263,12 @@ curl "https://api.emergingthreats.net/v1/samples/{md5}/events"
 ```
 
 ```python
-from urllib2 import Request, urlopen
-request = Request("https://api.emergingthreats.net/v1/samples/{md5}/events")
-request.add_header("Authorization", "SECRETKEY")
-result = urlopen(request)
-print result.read()
+import requests
+api_key = "SECRETKEY"
+url = "https://api.emergingthreats.net/v1/samples/{md5}/events"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
 ```
 
 > The JSON response should look something like:
