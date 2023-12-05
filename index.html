@@ -452,6 +452,28 @@
               </ul>
           </li>
           <li>
+            <a href="#trends-informationbeta" class="toc-h1 toc-link" data-title="Trends InformationBETA">Trends Information<sup>BETA</sup></a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-trends-information" class="toc-h2 toc-link" data-title="Get Trends Information">Get Trends Information</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#malware-summaries" class="toc-h1 toc-link" data-title=". malware/summaries">. malware/summaries</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#response-parameters-for-cve-rolling-count-parameter-combination" class="toc-h2 toc-link" data-title="Response Parameters for cve/rolling-count parameter combination">Response Parameters for cve/rolling-count parameter combination</a>
+                  </li>
+                  <li>
+                    <a href="#response-parameters-for-cve-summaries-parameter-combination" class="toc-h2 toc-link" data-title="Response Parameters for cve/summaries parameter combination">Response Parameters for cve/summaries parameter combination</a>
+                  </li>
+                  <li>
+                    <a href="#response-parameters-for-cve-activities-parameter-combination" class="toc-h2 toc-link" data-title="Response Parameters for cve/activities parameter combination">Response Parameters for cve/activities parameter combination</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -2869,6 +2891,216 @@ have an ETPro subscription, this will return a 403 Forbidden.</p>
 </tbody></table>
 
 <p>This will return information on threat actors.  The only variable here is the TA name which can be found on the rule’s metadata (e.g. TA453)</p>
+<h1 id='trends-informationbeta'>Trends Information<sup>BETA</sup></h1><h2 id='get-trends-information'>Get Trends Information</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.emergingthreats.net/v1/actors/{tag-name}/{report-name}"</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: SECRETKEY"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="s">"SECRETKEY"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.emergingthreats.net/v1/actors/{tag-name}/{report-name}"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="s">f'</span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s">'</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-35394"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2017-9841"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-35394"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2017-9841"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-35394"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2017-9841"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint will provide the ET Intel trends in malware activity, threat actor activity, and CVE exploit trends ranked by ET Pro signature fire volume.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://api.emergingthreats.net/v1/tags/{tag-name}/{report-name}</code></p>
+<h3 id='request-parameters'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>tag-name</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cve</td>
+<td></td>
+<td>The top ranked CVE exploit attempts observed today.</td>
+</tr>
+<tr>
+<td>malware</td>
+<td></td>
+<td>The top ranked malware families observed today.</td>
+</tr>
+<tr>
+<td>threat-actor</td>
+<td></td>
+<td>The top ranked threat actors observed today.</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Report-name</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>rolling-count</td>
+<td></td>
+<td>Provides the ranking from today, last week, 30 days ago, and 90 days ago.</td>
+</tr>
+<tr>
+<td>summaries</td>
+<td></td>
+<td>Provides today’s signature fire volume ranking for today.</td>
+</tr>
+<tr>
+<td>activities</td>
+<td></td>
+<td>Provides the week over week ranking based on volume.</td>
+</tr>
+</tbody></table>
+<h3 id='available-request-parameter-combinations'>Available Request parameter combinations</h3>
+<p>. cve/rolling-count
+  . cve/summaries
+  . cve/activities
+  . malware/rolling-count</p>
+<h1 id='malware-summaries'>. malware/summaries</h1>
+<p>. malware/activities
+  . threat-actor/rolling-count
+  . threat-actor/summaries
+  . threat-actor/activities</p>
+<h3 id='response-parameters-for-cve-rolling-count-parameter-combination'>Response Parameters for cve/rolling-count parameter combination</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tag</td>
+<td>No</td>
+<td>The name/id of CVE exploit.</td>
+</tr>
+<tr>
+<td>today-rank</td>
+<td>No</td>
+<td>CVE exploit ranking from today.</td>
+</tr>
+<tr>
+<td>seven-day-rank</td>
+<td>No</td>
+<td>7 day ranking for CVE exploit.</td>
+</tr>
+<tr>
+<td>thirty-day-rank</td>
+<td>No</td>
+<td>30 day ranking for CVE exploit.</td>
+</tr>
+<tr>
+<td>ninety-day-rank</td>
+<td>No</td>
+<td>90 day ranking for CVE exploit.</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters-for-cve-summaries-parameter-combination'>Response Parameters for cve/summaries parameter combination</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tag</td>
+<td>No</td>
+<td>The name/id of CVE exploits.</td>
+</tr>
+<tr>
+<td>event-rank</td>
+<td>No</td>
+<td>Event ranking for CVE Exploits.</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters-for-cve-activities-parameter-combination'>Response Parameters for cve/activities parameter combination</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tag</td>
+<td>No</td>
+<td>The name/id of CVE exploit.</td>
+</tr>
+<tr>
+<td>current-week-activity-rank</td>
+<td>No</td>
+<td>Current week activity ranking for CVE exploit.</td>
+</tr>
+<tr>
+<td>previous-week-activity-rank</td>
+<td>No</td>
+<td>Previous week activity ranking for CVE exploit.</td>
+</tr>
+</tbody></table>
+
+<p>Similarily the response parameters are same for other tag-name/report-name combinations</p>
 <h1 id='errors'>Errors</h1>
 <p>The ET Intelligence API uses the following error codes:</p>
 
