@@ -2887,7 +2887,7 @@ have an ETPro subscription, this will return a 403 Forbidden.</p>
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
 </code></pre></div>
 <blockquote>
-<p>The JSON response should look something like:</p>
+<p>The JSON response for cve/rolling-count should look something like:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -2910,31 +2910,39 @@ have an ETPro subscription, this will return a 403 Forbidden.</p>
         </span><span class="p">}</span><span class="w">
       </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-05-21:19:15"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"message_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"req212112229"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-          </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-44228"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"event-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-05-21:19:15"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"message_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"req212112229"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2023-27350"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"current-week-activity-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"previous-week-activity-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint will provide the ET Intel trends in malware activity, threat actor activity, and CVE exploit trends ranked by ET Pro signature fire volume.</p>
+<blockquote>
+<p>The JSON response for cve/summaries should look something like:
+<code>json
+{
+    &quot;success&quot;: true,
+    &quot;timestamp&quot;: &quot;2023-12-05-21:19:15&quot;,
+    &quot;message_id&quot;: &quot;req212112229&quot;,
+    &quot;response&quot;: [
+          {
+            &quot;tag&quot;: &quot;CVE-2021-44228&quot;,
+            &quot;event-rank&quot;: 1
+        }
+      ]
+}
+</code>
+The JSON response for cve/activities should look something like:
+<code>json
+{
+    &quot;success&quot;: true,
+    &quot;timestamp&quot;: &quot;2023-12-05-21:19:15&quot;,
+    &quot;message_id&quot;: &quot;req212112229&quot;,
+    &quot;response&quot;: [
+        {
+            &quot;tag&quot;: &quot;CVE-2023-27350&quot;,
+            &quot;current-week-activity-rank&quot;: 1,
+            &quot;previous-week-activity-rank&quot;: 2
+        }
+      ]
+}
+</code>
+This endpoint will provide the ET Intel trends in malware activity, threat actor activity, and CVE exploit trends ranked by ET Pro signature fire volume.</p>
+</blockquote>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET https://api.emergingthreats.net/v1/tags/{tag-name}/{report-name}</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
