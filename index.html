@@ -2903,45 +2903,45 @@ have an ETPro subscription, this will return a 403 Forbidden.</p>
 <blockquote>
 <p>The JSON response should look something like:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-35394"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2017-9841"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-35394"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2017-9841"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"today-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"seven-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"thirty-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"ninety-day-rank"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+<div class="highlight"><pre class="highlight plaintext"><code>{
+    "success": true,
+    "response": [
+        {
+            "tag": "CVE-2021-35394",
+            "today-rank": 1,
+            "seven-day-rank": 1,
+            "thirty-day-rank": 2,
+            "ninety-day-rank": 2
+        },
+        {
+            "tag": "CVE-2017-9841",
+            "today-rank": 2,
+            "seven-day-rank": 2,
+            "thirty-day-rank": 3,
+            "ninety-day-rank": 3
+        }
+      ]
+}
+</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>{
+    "success": true,
+    "response": [
+        {
+            "tag": "CVE-2021-35394",
+            "today-rank": 1,
+            "seven-day-rank": 1,
+            "thirty-day-rank": 2,
+            "ninety-day-rank": 2
+        },
+        {
+            "tag": "CVE-2017-9841",
+            "today-rank": 2,
+            "seven-day-rank": 2,
+            "thirty-day-rank": 3,
+            "ninety-day-rank": 3
+        }
+      ]
+}
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
