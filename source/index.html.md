@@ -15,7 +15,8 @@ includes:
   - malware
   - samples
   - sids
-  # - threatactors
+  - threatactors
+  - trends
   - errors
   
 
