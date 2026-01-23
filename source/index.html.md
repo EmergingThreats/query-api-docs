@@ -51,7 +51,7 @@ code_clipboard: true
 /v1/ips/{ip}/samples
 /v1/ips/{ip}/urls
 
-/v1/malare/{malware_family}
+/v1/malware/{malware_family}
 /v1/samples/{md5}
 /v1/samples/{md5}/connections
 /v1/samples/{md5}/dns
@@ -62,6 +62,9 @@ code_clipboard: true
 /v1/sids/{sid}/ips
 /v1/sids/{sid}/domains
 /v1/sids/{sid}/samples
+/v1/sids/{sid}/text
+/v1/sids/{sid}/summary
+/v1/sids/{sid}/references
 
 /v1/actors/{threatactor}
 ```
