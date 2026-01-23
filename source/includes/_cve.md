@@ -1,4 +1,4 @@
-# CVE Information <sup>BETA</sup>
+# CVE Information
 
 ## Get CVE Details
 

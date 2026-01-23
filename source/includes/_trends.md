@@ -1,4 +1,4 @@
-# Trends Information<sup>BETA</sup>
+# Trends Information
 
 ## Get Trends Information 
 
