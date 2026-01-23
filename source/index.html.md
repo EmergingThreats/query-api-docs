@@ -27,6 +27,9 @@ code_clipboard: true
 
 # Introduction
 
+**API Version:** v1  
+**Last Updated:** January 2026
+
 > Summary of Resource URL Patterns
 
 ```plaintext
