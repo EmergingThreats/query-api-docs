@@ -1,4 +1,4 @@
-# Threat Actor Information<sup>BETA</sup>
+# Threat Actor Information
 
 ## Get Threat Actor Bio Information 
 
