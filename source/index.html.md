@@ -110,8 +110,7 @@ You must replace `SECRETKEY` with your personal API key.
 
 # Rate-limiting
 
-The ET Intelligence API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
-To increase your rate limit, contact sales.
+The ET Intelligence API will rate limit requests on a per-API key basis. The default rate is 200 queries/minute. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit. To increase your rate limit, contact sales or support@emergingthreats.net.
 
 > The JSON response associated with an exceeded rate limit should look something like:
 
