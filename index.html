@@ -546,8 +546,7 @@ curl https://api.emergingthreats.net/v1/repcategories <span class="nt">-H</span>
 You must replace `SECRETKEY` with your personal API key.
 </aside>
 <h1 id='rate-limiting'>Rate-limiting</h1>
-<p>The ET Intelligence API will rate limit requests on a per-API key basis. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit.
-To increase your rate limit, contact sales.</p>
+<p>The ET Intelligence API will rate limit requests on a per-API key basis. The default rate is 200 queries/minute. If you exceed your rate limit you will receive an API response with a 429 HTTP status code and a brief message indicating you have exceeded your rate limit. To increase your rate limit, contact sales or support@emergingthreats.net.</p>
 
 <blockquote>
 <p>The JSON response associated with an exceeded rate limit should look something like:</p>
