@@ -238,4 +238,255 @@ percent_change | No | The weekly percentage change by event volume.
 cvss_v3_score | No | CVSS version 3.X base score for a vulnerability.
 description | No | The description of vulnerability.
 
-This endpoint the highest volume exploit growth week over week targeting CVEs.  You can change the query from 5 to 10 if desired. 
+This endpoint the highest volume exploit growth week over week targeting CVEs.  You can change the query from 5 to 10 if desired.
+
+# Active Exploits Protection
+
+Active Exploits Protection (AEP) provides CVE risk scoring based on real-world exploit activity observed across Proofpoint's sensor network. AEP combines CVSS severity, EPSS probability, CISA KEV status, Metasploit/ExploitDB availability, and SID-based detection signals into a single composite score with directional trend and risk tier classification.
+
+## Get AEP Score for a CVE
+
+```shell
+curl "https://insights-api.emergingthreats.net/v2/cve/{CVE}/score" \
+  -H "Authorization: SECRETKEY"
+```
+
+```python
+import requests
+api_key = "SECRETKEY"
+url = "https://insights-api.emergingthreats.net/v2/cve/CVE-2021-44228/score"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+> The JSON response should look something like:
+
+```json
+{
+    "success": true,
+    "timestamp": "2026-05-26T20:40:39.823348124",
+    "response": {
+        "cve": "CVE-2021-44228",
+        "cvss_score": 10.0,
+        "epss_score": 0.9436,
+        "in_cisa_kev": true,
+        "in_metasploit": true,
+        "in_exploitdb": true,
+        "aed_score": 94.33,
+        "unique_sid_observed": 26,
+        "recently_observed": true,
+        "sid_trend": "Increasing",
+        "risk_tier": "CRITICAL",
+        "last_updated": "2026-05-26T03:00:14.149932"
+    }
+}
+```
+
+This endpoint returns the Proofpoint AEP (Active Exploits Protection) score and associated metadata for a specific CVE.
+
+### HTTP Request
+
+`GET https://insights-api.emergingthreats.net/v2/cve/{cve}/score`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+cve | The CVE identifier in CVE-YYYY-NNNNN format (e.g. CVE-2021-44228)
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+cve | No | The vulnerability identification number.
+cvss_score | No | CVSS base score (0.0–10.0).
+epss_score | No | EPSS probability score (0.0–1.0) estimating likelihood of exploitation in the wild.
+in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
+in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
+in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
+aed_score | No | Proofpoint AEP composite score (0–100) reflecting observed exploit severity and activity.
+unique_sid_observed | No | Number of unique Suricata SIDs (detection rules) associated with this CVE.
+recently_observed | No | Whether exploit activity for this CVE was observed by Proofpoint in the last 7 days.
+sid_trend | No | Directional trend of SID event volume over the last 7 days. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
+risk_tier | No | Risk classification based on AEP score. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
+last_updated | No | Timestamp of the last score computation (ISO 8601).
+
+## Get Top CVEs by AEP Score
+
+```shell
+curl "https://insights-api.emergingthreats.net/v2/cve/top-aed?limit=10" \
+  -H "Authorization: SECRETKEY"
+```
+
+```python
+import requests
+api_key = "SECRETKEY"
+url = "https://insights-api.emergingthreats.net/v2/cve/top-aed?limit=10"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+> The JSON response should look something like:
+
+```json
+{
+    "success": true,
+    "timestamp": "2026-05-26T20:41:12.443219873",
+    "response": [
+        {
+            "cve": "CVE-2020-5902",
+            "cvss_score": 9.8,
+            "epss_score": 0.9443,
+            "in_cisa_kev": true,
+            "in_metasploit": true,
+            "in_exploitdb": true,
+            "aed_score": 97.61,
+            "unique_sid_observed": 1,
+            "recently_observed": true,
+            "sid_trend": "Decreasing",
+            "risk_tier": "CRITICAL",
+            "last_updated": "2026-05-26T03:00:14.149932"
+        },
+        {
+            "cve": "CVE-2021-44228",
+            "cvss_score": 10.0,
+            "epss_score": 0.9436,
+            "in_cisa_kev": true,
+            "in_metasploit": true,
+            "in_exploitdb": true,
+            "aed_score": 94.33,
+            "unique_sid_observed": 26,
+            "recently_observed": true,
+            "sid_trend": "Increasing",
+            "risk_tier": "CRITICAL",
+            "last_updated": "2026-05-26T03:00:14.149932"
+        }
+    ]
+}
+```
+
+This endpoint returns the top N CVEs ranked by Proofpoint AEP score, ordered highest to lowest. Only CVEs with a computed AEP score are included.
+
+### HTTP Request
+
+`GET https://insights-api.emergingthreats.net/v2/cve/top-aed?limit={limit}`
+
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+limit | 50 | Number of CVEs to return (min: 1, max: 1000).
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+cve | No | The vulnerability identification number.
+cvss_score | No | CVSS base score (0.0–10.0).
+epss_score | No | EPSS probability score (0.0–1.0).
+in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
+in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
+in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
+aed_score | No | Proofpoint AEP composite score (0–100).
+unique_sid_observed | No | Number of unique Suricata SIDs associated with this CVE.
+recently_observed | No | Whether exploit activity was observed in the last 7 days.
+sid_trend | No | Directional trend of SID event volume. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
+risk_tier | No | Risk classification. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
+last_updated | No | Timestamp of the last score computation (ISO 8601).
+
+## Get CVEs by Risk Tier
+
+```shell
+curl "https://insights-api.emergingthreats.net/v2/cve/tier/CRITICAL?page=0&size=50" \
+  -H "Authorization: SECRETKEY"
+```
+
+```python
+import requests
+api_key = "SECRETKEY"
+url = "https://insights-api.emergingthreats.net/v2/cve/tier/CRITICAL?page=0&size=50"
+headers = {'Authorization': f'{api_key}'}
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+> The JSON response should look something like:
+
+```json
+{
+    "success": true,
+    "timestamp": "2026-05-26T20:42:50.286752996",
+    "response": {
+        "content": [
+            {
+                "cve": "CVE-2020-5902",
+                "cvss_score": 9.8,
+                "epss_score": 0.9443,
+                "in_cisa_kev": true,
+                "in_metasploit": true,
+                "in_exploitdb": true,
+                "aed_score": 97.61,
+                "unique_sid_observed": 1,
+                "recently_observed": true,
+                "sid_trend": "Decreasing",
+                "risk_tier": "CRITICAL",
+                "last_updated": "2026-05-26T03:00:14.149932"
+            }
+        ],
+        "totalElements": 73,
+        "totalPages": 2,
+        "size": 50,
+        "number": 0,
+        "first": true,
+        "last": false,
+        "numberOfElements": 50,
+        "empty": false
+    }
+}
+```
+
+This endpoint returns a paginated list of CVEs filtered by AEP risk tier. Use this to retrieve all CVEs in a given risk band for bulk triage or dashboard population.
+
+### HTTP Request
+
+`GET https://insights-api.emergingthreats.net/v2/cve/tier/{tier}?page={page}&size={size}`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+tier | Risk tier to filter by. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+page | 0 | Zero-indexed page number.
+size | 50 | Page size (min: 1, max: 1000).
+
+### Response Parameters
+
+Parameter | Optional? | Description
+--------- | --------- | -----------
+content | No | Array of CVE score objects for the requested page.
+cve | No | The vulnerability identification number.
+cvss_score | No | CVSS base score (0.0–10.0).
+epss_score | No | EPSS probability score (0.0–1.0).
+in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
+in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
+in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
+aed_score | No | Proofpoint AEP composite score (0–100).
+unique_sid_observed | No | Number of unique Suricata SIDs associated with this CVE.
+recently_observed | No | Whether exploit activity was observed in the last 7 days.
+sid_trend | No | Directional trend of SID event volume. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
+risk_tier | No | Risk classification. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
+last_updated | No | Timestamp of the last score computation (ISO 8601).
+totalElements | No | Total number of CVEs in this tier.
+totalPages | No | Total number of pages at the requested page size.
+size | No | Page size used for this response.
+number | No | Current page number (zero-indexed).
+first | No | Whether this is the first page.
+last | No | Whether this is the last page.
