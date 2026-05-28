@@ -38,6 +38,10 @@ code_clipboard: true
 /v1/cve/{cve}
 /v1/cve/top-trending
 
+/v2/cve/{cve}/score
+/v2/cve/top-aed
+/v2/cve/tier/{tier}
+
 /v1/domains/{domain}/events
 /v1/domains/{domain}/geoloc
 /v1/domains/{domain}/ips
