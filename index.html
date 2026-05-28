@@ -335,6 +335,20 @@
               </ul>
           </li>
           <li>
+            <a href="#active-exploits-protection" class="toc-h1 toc-link" data-title="Active Exploits Protection">Active Exploits Protection</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-aep-score-for-a-cve" class="toc-h2 toc-link" data-title="Get AEP Score for a CVE">Get AEP Score for a CVE</a>
+                  </li>
+                  <li>
+                    <a href="#get-top-cves-by-aep-score" class="toc-h2 toc-link" data-title="Get Top CVEs by AEP Score">Get Top CVEs by AEP Score</a>
+                  </li>
+                  <li>
+                    <a href="#get-cves-by-risk-tier" class="toc-h2 toc-link" data-title="Get CVEs by Risk Tier">Get CVEs by Risk Tier</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#domain-information" class="toc-h1 toc-link" data-title="Domain Information">Domain Information</a>
               <ul class="toc-list-h2">
                   <li>
@@ -481,6 +495,10 @@
 
 /v1/cve/{cve}
 /v1/cve/top-trending
+
+/v2/cve/{cve}/score
+/v2/cve/top-aed
+/v2/cve/tier/{tier}
 
 /v1/domains/{domain}/events
 /v1/domains/{domain}/geoloc
@@ -1018,7 +1036,438 @@ You must replace `SECRETKEY` with your personal API key.
 </tr>
 </tbody></table>
 
-<p>This endpoint the highest volume exploit growth week over week targeting CVEs.  You can change the query from 5 to 10 if desired. </p>
+<p>This endpoint the highest volume exploit growth week over week targeting CVEs.  You can change the query from 5 to 10 if desired.</p>
+<h1 id='active-exploits-protection'>Active Exploits Protection</h1>
+<p>Active Exploits Protection (AEP) provides CVE risk scoring based on real-world exploit activity observed across Proofpoint&#39;s sensor network. AEP combines CVSS severity, EPSS probability, CISA KEV status, Metasploit/ExploitDB availability, and SID-based detection signals into a single composite score with directional trend and risk tier classification.</p>
+<h2 id='get-aep-score-for-a-cve'>Get AEP Score for a CVE</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://insights-api.emergingthreats.net/v2/cve/{CVE}/score"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: SECRETKEY"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="s">"SECRETKEY"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://insights-api.emergingthreats.net/v2/cve/CVE-2021-44228/score"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="s">f'</span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s">'</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T20:40:39.823348124"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-44228"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9436</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"aed_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">94.33</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Increasing"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint returns the Proofpoint AEP (Active Exploits Protection) score and associated metadata for a specific CVE.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://insights-api.emergingthreats.net/v2/cve/{cve}/score</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cve</td>
+<td>The CVE identifier in CVE-YYYY-NNNNN format (e.g. CVE-2021-44228)</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters-3'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cve</td>
+<td>No</td>
+<td>The vulnerability identification number.</td>
+</tr>
+<tr>
+<td>cvss_score</td>
+<td>No</td>
+<td>CVSS base score (0.0–10.0).</td>
+</tr>
+<tr>
+<td>epss_score</td>
+<td>No</td>
+<td>EPSS probability score (0.0–1.0) estimating likelihood of exploitation in the wild.</td>
+</tr>
+<tr>
+<td>in_cisa_kev</td>
+<td>No</td>
+<td>Whether the CVE is listed in CISA&#39;s Known Exploited Vulnerabilities catalog.</td>
+</tr>
+<tr>
+<td>in_metasploit</td>
+<td>No</td>
+<td>Whether a Metasploit exploit module exists for this CVE.</td>
+</tr>
+<tr>
+<td>in_exploitdb</td>
+<td>No</td>
+<td>Whether an ExploitDB entry exists for this CVE.</td>
+</tr>
+<tr>
+<td>aed_score</td>
+<td>No</td>
+<td>Proofpoint AEP composite score (0–100) reflecting observed exploit severity and activity.</td>
+</tr>
+<tr>
+<td>unique_sid_observed</td>
+<td>No</td>
+<td>Number of unique Suricata SIDs (detection rules) associated with this CVE.</td>
+</tr>
+<tr>
+<td>recently_observed</td>
+<td>No</td>
+<td>Whether exploit activity for this CVE was observed by Proofpoint in the last 7 days.</td>
+</tr>
+<tr>
+<td>sid_trend</td>
+<td>No</td>
+<td>Directional trend of SID event volume over the last 7 days. Values: <code>Increasing</code>, <code>Decreasing</code>, <code>Stable</code>, <code>None</code>.</td>
+</tr>
+<tr>
+<td>risk_tier</td>
+<td>No</td>
+<td>Risk classification based on AEP score. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
+</tr>
+<tr>
+<td>last_updated</td>
+<td>No</td>
+<td>Timestamp of the last score computation (ISO 8601).</td>
+</tr>
+</tbody></table>
+<h2 id='get-top-cves-by-aep-score'>Get Top CVEs by AEP Score</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://insights-api.emergingthreats.net/v2/cve/top-aed?limit=10"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: SECRETKEY"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="s">"SECRETKEY"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://insights-api.emergingthreats.net/v2/cve/top-aed?limit=10"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="s">f'</span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s">'</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T20:41:12.443219873"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2020-5902"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9443</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aed_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">97.61</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Decreasing"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-44228"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9436</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aed_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">94.33</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Increasing"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint returns the top N CVEs ranked by Proofpoint AEP score, ordered highest to lowest. Only CVEs with a computed AEP score are included.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://insights-api.emergingthreats.net/v2/cve/top-aed?limit={limit}</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>limit</td>
+<td>50</td>
+<td>Number of CVEs to return (min: 1, max: 1000).</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters-4'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cve</td>
+<td>No</td>
+<td>The vulnerability identification number.</td>
+</tr>
+<tr>
+<td>cvss_score</td>
+<td>No</td>
+<td>CVSS base score (0.0–10.0).</td>
+</tr>
+<tr>
+<td>epss_score</td>
+<td>No</td>
+<td>EPSS probability score (0.0–1.0).</td>
+</tr>
+<tr>
+<td>in_cisa_kev</td>
+<td>No</td>
+<td>Whether the CVE is listed in CISA&#39;s Known Exploited Vulnerabilities catalog.</td>
+</tr>
+<tr>
+<td>in_metasploit</td>
+<td>No</td>
+<td>Whether a Metasploit exploit module exists for this CVE.</td>
+</tr>
+<tr>
+<td>in_exploitdb</td>
+<td>No</td>
+<td>Whether an ExploitDB entry exists for this CVE.</td>
+</tr>
+<tr>
+<td>aed_score</td>
+<td>No</td>
+<td>Proofpoint AEP composite score (0–100).</td>
+</tr>
+<tr>
+<td>unique_sid_observed</td>
+<td>No</td>
+<td>Number of unique Suricata SIDs associated with this CVE.</td>
+</tr>
+<tr>
+<td>recently_observed</td>
+<td>No</td>
+<td>Whether exploit activity was observed in the last 7 days.</td>
+</tr>
+<tr>
+<td>sid_trend</td>
+<td>No</td>
+<td>Directional trend of SID event volume. Values: <code>Increasing</code>, <code>Decreasing</code>, <code>Stable</code>, <code>None</code>.</td>
+</tr>
+<tr>
+<td>risk_tier</td>
+<td>No</td>
+<td>Risk classification. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
+</tr>
+<tr>
+<td>last_updated</td>
+<td>No</td>
+<td>Timestamp of the last score computation (ISO 8601).</td>
+</tr>
+</tbody></table>
+<h2 id='get-cves-by-risk-tier'>Get CVEs by Risk Tier</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://insights-api.emergingthreats.net/v2/cve/tier/CRITICAL?page=0&amp;size=50"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: SECRETKEY"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="s">"SECRETKEY"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://insights-api.emergingthreats.net/v2/cve/tier/CRITICAL?page=0&amp;size=50"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="s">f'</span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s">'</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>The JSON response should look something like:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T20:42:50.286752996"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2020-5902"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.8</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9443</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"aed_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">97.61</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Decreasing"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"totalElements"</span><span class="p">:</span><span class="w"> </span><span class="mi">73</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalPages"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"numberOfElements"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"empty"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint returns a paginated list of CVEs filtered by AEP risk tier. Use this to retrieve all CVEs in a given risk band for bulk triage or dashboard population.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>GET https://insights-api.emergingthreats.net/v2/cve/tier/{tier}?page={page}&amp;size={size}</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tier</td>
+<td>Risk tier to filter by. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
+</tr>
+</tbody></table>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>0</td>
+<td>Zero-indexed page number.</td>
+</tr>
+<tr>
+<td>size</td>
+<td>50</td>
+<td>Page size (min: 1, max: 1000).</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters-5'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>content</td>
+<td>No</td>
+<td>Array of CVE score objects for the requested page.</td>
+</tr>
+<tr>
+<td>cve</td>
+<td>No</td>
+<td>The vulnerability identification number.</td>
+</tr>
+<tr>
+<td>cvss_score</td>
+<td>No</td>
+<td>CVSS base score (0.0–10.0).</td>
+</tr>
+<tr>
+<td>epss_score</td>
+<td>No</td>
+<td>EPSS probability score (0.0–1.0).</td>
+</tr>
+<tr>
+<td>in_cisa_kev</td>
+<td>No</td>
+<td>Whether the CVE is listed in CISA&#39;s Known Exploited Vulnerabilities catalog.</td>
+</tr>
+<tr>
+<td>in_metasploit</td>
+<td>No</td>
+<td>Whether a Metasploit exploit module exists for this CVE.</td>
+</tr>
+<tr>
+<td>in_exploitdb</td>
+<td>No</td>
+<td>Whether an ExploitDB entry exists for this CVE.</td>
+</tr>
+<tr>
+<td>aed_score</td>
+<td>No</td>
+<td>Proofpoint AEP composite score (0–100).</td>
+</tr>
+<tr>
+<td>unique_sid_observed</td>
+<td>No</td>
+<td>Number of unique Suricata SIDs associated with this CVE.</td>
+</tr>
+<tr>
+<td>recently_observed</td>
+<td>No</td>
+<td>Whether exploit activity was observed in the last 7 days.</td>
+</tr>
+<tr>
+<td>sid_trend</td>
+<td>No</td>
+<td>Directional trend of SID event volume. Values: <code>Increasing</code>, <code>Decreasing</code>, <code>Stable</code>, <code>None</code>.</td>
+</tr>
+<tr>
+<td>risk_tier</td>
+<td>No</td>
+<td>Risk classification. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
+</tr>
+<tr>
+<td>last_updated</td>
+<td>No</td>
+<td>Timestamp of the last score computation (ISO 8601).</td>
+</tr>
+<tr>
+<td>totalElements</td>
+<td>No</td>
+<td>Total number of CVEs in this tier.</td>
+</tr>
+<tr>
+<td>totalPages</td>
+<td>No</td>
+<td>Total number of pages at the requested page size.</td>
+</tr>
+<tr>
+<td>size</td>
+<td>No</td>
+<td>Page size used for this response.</td>
+</tr>
+<tr>
+<td>number</td>
+<td>No</td>
+<td>Current page number (zero-indexed).</td>
+</tr>
+<tr>
+<td>first</td>
+<td>No</td>
+<td>Whether this is the first page.</td>
+</tr>
+<tr>
+<td>last</td>
+<td>No</td>
+<td>Whether this is the last page.</td>
+</tr>
+</tbody></table>
 <h1 id='domain-information'>Domain Information</h1><h2 id='get-current-domain-reputation'>Get current domain reputation</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: SECRETKEY"</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
