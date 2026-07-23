@@ -273,12 +273,15 @@ print(response.json())
         "in_cisa_kev": true,
         "in_metasploit": true,
         "in_exploitdb": true,
-        "aed_score": 94.33,
+        "pfpt_aep_score": 94.33,
         "unique_sid_observed": 26,
         "recently_observed": true,
         "sid_trend": "Increasing",
+        "velocity_7d": 12.5,
+        "sid_events_7d": 3842,
         "risk_tier": "CRITICAL",
-        "last_updated": "2026-05-26T03:00:14.149932"
+        "last_updated": "2026-05-26T03:00:14.149932",
+        "description": "In BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."
     }
 }
 ```
@@ -305,12 +308,15 @@ epss_score | No | EPSS probability score (0.0–1.0) estimating likelihood of ex
 in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
 in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
 in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
-aed_score | No | Proofpoint AEP composite score (0–100) reflecting observed exploit severity and activity.
+pfpt_aep_score | No | Proofpoint AEP composite score (0–100) reflecting observed exploit severity and activity.
 unique_sid_observed | No | Number of unique Suricata SIDs (detection rules) associated with this CVE.
 recently_observed | No | Whether exploit activity for this CVE was observed by Proofpoint in the last 7 days.
 sid_trend | No | Directional trend of SID event volume over the last 7 days. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
+velocity_7d | No | Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.
+sid_events_7d | No | Total number of SID events observed for this CVE in the last 7 days.
 risk_tier | No | Risk classification based on AEP score. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
 last_updated | No | Timestamp of the last score computation (ISO 8601).
+description | No | Human-readable description of the vulnerability.
 
 ## Get Top CVEs by AEP Score
 
@@ -342,12 +348,15 @@ print(response.json())
             "in_cisa_kev": true,
             "in_metasploit": true,
             "in_exploitdb": true,
-            "aed_score": 97.61,
+            "pfpt_aep_score": 97.61,
             "unique_sid_observed": 1,
             "recently_observed": true,
             "sid_trend": "Decreasing",
+            "velocity_7d": -3.2,
+            "sid_events_7d": 512,
             "risk_tier": "CRITICAL",
-            "last_updated": "2026-05-26T03:00:14.149932"
+            "last_updated": "2026-05-26T03:00:14.149932",
+            "description": "On BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."
         },
         {
             "cve": "CVE-2021-44228",
@@ -356,12 +365,15 @@ print(response.json())
             "in_cisa_kev": true,
             "in_metasploit": true,
             "in_exploitdb": true,
-            "aed_score": 94.33,
+            "pfpt_aep_score": 94.33,
             "unique_sid_observed": 26,
             "recently_observed": true,
             "sid_trend": "Increasing",
+            "velocity_7d": 12.5,
+            "sid_events_7d": 3842,
             "risk_tier": "CRITICAL",
-            "last_updated": "2026-05-26T03:00:14.149932"
+            "last_updated": "2026-05-26T03:00:14.149932",
+            "description": "Apache Log4j2 2.0-beta9 through 2.15.0 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints."
         }
     ]
 }
@@ -390,12 +402,15 @@ epss_score | No | EPSS probability score (0.0–1.0).
 in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
 in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
 in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
-aed_score | No | Proofpoint AEP composite score (0–100).
+pfpt_aep_score | No | Proofpoint AEP composite score (0–100).
 unique_sid_observed | No | Number of unique Suricata SIDs associated with this CVE.
 recently_observed | No | Whether exploit activity was observed in the last 7 days.
 sid_trend | No | Directional trend of SID event volume. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
+velocity_7d | No | Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.
+sid_events_7d | No | Total number of SID events observed for this CVE in the last 7 days.
 risk_tier | No | Risk classification. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
 last_updated | No | Timestamp of the last score computation (ISO 8601).
+description | No | Human-readable description of the vulnerability.
 
 ## Get CVEs by Risk Tier
 
@@ -428,12 +443,15 @@ print(response.json())
                 "in_cisa_kev": true,
                 "in_metasploit": true,
                 "in_exploitdb": true,
-                "aed_score": 97.61,
+                "pfpt_aep_score": 97.61,
                 "unique_sid_observed": 1,
                 "recently_observed": true,
                 "sid_trend": "Decreasing",
+                "velocity_7d": -3.2,
+                "sid_events_7d": 512,
                 "risk_tier": "CRITICAL",
-                "last_updated": "2026-05-26T03:00:14.149932"
+                "last_updated": "2026-05-26T03:00:14.149932",
+                "description": "On BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."
             }
         ],
         "totalElements": 73,
@@ -478,12 +496,15 @@ epss_score | No | EPSS probability score (0.0–1.0).
 in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
 in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
 in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
-aed_score | No | Proofpoint AEP composite score (0–100).
+pfpt_aep_score | No | Proofpoint AEP composite score (0–100).
 unique_sid_observed | No | Number of unique Suricata SIDs associated with this CVE.
 recently_observed | No | Whether exploit activity was observed in the last 7 days.
 sid_trend | No | Directional trend of SID event volume. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
+velocity_7d | No | Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.
+sid_events_7d | No | Total number of SID events observed for this CVE in the last 7 days.
 risk_tier | No | Risk classification. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
 last_updated | No | Timestamp of the last score computation (ISO 8601).
+description | No | Human-readable description of the vulnerability.
 totalElements | No | Total number of CVEs in this tier.
 totalPages | No | Total number of pages at the requested page size.
 size | No | Page size used for this response.
