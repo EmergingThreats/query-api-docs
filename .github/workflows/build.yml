@@ -8,7 +8,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Pinned: setup-ruby has no Ruby 2.x builds for newer runner images.
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:
