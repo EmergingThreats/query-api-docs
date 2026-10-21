@@ -242,7 +242,42 @@ This endpoint the highest volume exploit growth week over week targeting CVEs.  
 
 # Active Exploits Protection
 
-Active Exploits Protection (AEP) provides CVE risk scoring based on real-world exploit activity observed across Proofpoint's sensor network. AEP combines CVSS severity, EPSS probability, CISA KEV status, Metasploit/ExploitDB availability, and SID-based detection signals into a single composite score with directional trend and risk tier classification.
+Active Exploits Protection (AEP) scores CVEs by how likely they are to be exploited against you right now. Each score runs from 0 to 100 and combines three parts:
+
+Component | Points | What it measures
+--------- | ------ | ----------------
+Public risk | 0 to 60 | CVSS severity, EPSS probability, CISA KEV listing, known ransomware use, and exploit maturity.
+Current activity | 0 to 30 | Exploit activity Proofpoint observed in the last 7 days across network sensors and email.
+Historical persistence | 0 to 10 | How long and how consistently the CVE has been exploited over the last 26 weeks, weighted toward recent activity.
+
+Scores are recomputed daily.
+
+### AEP tiers
+
+Tier | AEP score
+---- | ---------
+`CRITICAL` | 85 and above
+`HIGH` | 70 to below 85
+`MEDIUM` | 50 to below 70
+`LOW` | Below 50
+
+### Velocity
+
+`velocity_7d` is the percent change in total events (network plus email) over the last 7 days compared with the 7 days before. `velocity_direction` groups that change so you don't have to apply your own thresholds:
+
+Value | Meaning
+----- | -------
+`STEEP_UP` | Up 50% or more.
+`UP` | Up 10% to 50%.
+`FLAT` | Within 10% either way.
+`DOWN` | Down 10% to 50%.
+`STEEP_DOWN` | Down 50% or more.
+`NEW` | Activity this week and none the week before. `velocity_7d` is `null` because there's no baseline.
+`NONE` | No activity in either week. `velocity_7d` is `null`.
+
+<aside class="notice">
+AEP v4.7 renamed several response fields. If you integrated with an earlier version, update these names: <code>pfpt_aep_score</code> is now <code>aep_score</code>, <code>risk_tier</code> is now <code>aep_tier</code>, <code>sid_events_7d</code> is now <code>total_events_7d</code> (network plus email), and <code>sid_trend</code> is replaced by <code>velocity_direction</code>. <code>unique_sid_observed</code> and <code>recently_observed</code> were removed; use <code>total_events_7d &gt; 0</code> in place of <code>recently_observed</code>.
+</aside>
 
 ## Get AEP Score for a CVE
 
@@ -265,28 +300,32 @@ print(response.json())
 ```json
 {
     "success": true,
-    "timestamp": "2026-05-26T20:40:39.823348124",
+    "timestamp": "2026-10-21T16:54:27.18174",
     "response": {
         "cve": "CVE-2021-44228",
+        "description": "Apache Log4j2 2.0-beta9 through 2.15.0 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints.",
         "cvss_score": 10.0,
-        "epss_score": 0.9436,
+        "epss_score": 1.0,
         "in_cisa_kev": true,
+        "kev_ransomware_use": true,
         "in_metasploit": true,
         "in_exploitdb": true,
-        "pfpt_aep_score": 94.33,
-        "unique_sid_observed": 26,
-        "recently_observed": true,
-        "sid_trend": "Increasing",
-        "velocity_7d": 12.5,
-        "sid_events_7d": 3842,
-        "risk_tier": "CRITICAL",
-        "last_updated": "2026-05-26T03:00:14.149932",
-        "description": "In BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."
+        "aep_score": 92.17,
+        "aep_tier": "CRITICAL",
+        "public_risk_score": 60.0,
+        "current_activity_score": 22.17,
+        "historical_persistence_score": 10.0,
+        "exploit_maturity": "Weaponized",
+        "attack_vector": "NETWORK+EMAIL",
+        "total_events_7d": 702381,
+        "velocity_7d": 53.78,
+        "velocity_direction": "STEEP_UP",
+        "last_updated": "2026-10-21T20:16:59.230534"
     }
 }
 ```
 
-This endpoint returns the Proofpoint AEP (Active Exploits Protection) score and associated metadata for a specific CVE.
+This endpoint returns the AEP score, tier, component scores and 7-day activity for a specific CVE.
 
 ### HTTP Request
 
@@ -303,20 +342,24 @@ cve | The CVE identifier in CVE-YYYY-NNNNN format (e.g. CVE-2021-44228)
 Parameter | Optional? | Description
 --------- | --------- | -----------
 cve | No | The vulnerability identification number.
-cvss_score | No | CVSS base score (0.0–10.0).
-epss_score | No | EPSS probability score (0.0–1.0) estimating likelihood of exploitation in the wild.
-in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
-in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
-in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
-pfpt_aep_score | No | Proofpoint AEP composite score (0–100) reflecting observed exploit severity and activity.
-unique_sid_observed | No | Number of unique Suricata SIDs (detection rules) associated with this CVE.
-recently_observed | No | Whether exploit activity for this CVE was observed by Proofpoint in the last 7 days.
-sid_trend | No | Directional trend of SID event volume over the last 7 days. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
-velocity_7d | No | Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.
-sid_events_7d | No | Total number of SID events observed for this CVE in the last 7 days.
-risk_tier | No | Risk classification based on AEP score. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
-last_updated | No | Timestamp of the last score computation (ISO 8601).
-description | No | Human-readable description of the vulnerability.
+description | Yes | Human-readable description of the vulnerability.
+cvss_score | Yes | CVSS base score (0.0 to 10.0).
+epss_score | Yes | EPSS probability (0.0 to 1.0) that the CVE will be exploited in the wild.
+in_cisa_kev | Yes | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
+kev_ransomware_use | Yes | Whether CISA reports the CVE as used in ransomware campaigns.
+in_metasploit | Yes | Whether a Metasploit exploit module exists for this CVE.
+in_exploitdb | Yes | Whether an ExploitDB entry exists for this CVE.
+aep_score | No | AEP score (0 to 100). The sum of the three component scores.
+aep_tier | No | Tier for `aep_score`. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`. See [AEP tiers](#aep-tiers).
+public_risk_score | No | Public risk component (0 to 60).
+current_activity_score | No | Current activity component (0 to 30).
+historical_persistence_score | No | Historical persistence component (0 to 10).
+exploit_maturity | No | How mature the available exploits are. `Weaponized`: a Metasploit module exists, or Proofpoint sees widespread exploitation. `Reliable`: a public ExploitDB exploit exists. `Corroborated`: no public exploit, but Proofpoint has seen it exploited in email. `None`: no exploit evidence.
+attack_vector | Yes | Where Proofpoint observed exploitation in the last 7 days. Values: `NETWORK`, `EMAIL`, `NETWORK+EMAIL`. `null` when nothing was observed.
+total_events_7d | No | Exploit events Proofpoint observed for this CVE in the last 7 days, network plus email.
+velocity_7d | Yes | Percent change in `total_events_7d` compared with the prior 7 days. `null` when the prior 7 days had no events. See [Velocity](#velocity).
+velocity_direction | No | Direction of the 7-day change. Values: `STEEP_UP`, `UP`, `FLAT`, `DOWN`, `STEEP_DOWN`, `NEW`, `NONE`.
+last_updated | No | Timestamp of the last score computation (ISO 8601, UTC).
 
 ## Get Top CVEs by AEP Score
 
@@ -339,52 +382,59 @@ print(response.json())
 ```json
 {
     "success": true,
-    "timestamp": "2026-05-26T20:41:12.443219873",
+    "timestamp": "2026-10-21T16:55:02.118273",
     "response": [
         {
-            "cve": "CVE-2020-5902",
+            "cve": "CVE-2018-13379",
+            "description": "An Improper Limitation of a Pathname to a Restricted Directory in Fortinet FortiOS 6.0.0 to 6.0.4, 5.6.3 to 5.6.7 and 5.4.6 to 5.4.12 under SSL VPN web portal allows an unauthenticated attacker to download system files via special crafted HTTP resource requests.",
             "cvss_score": 9.8,
-            "epss_score": 0.9443,
+            "epss_score": 1.0,
             "in_cisa_kev": true,
+            "kev_ransomware_use": true,
             "in_metasploit": true,
             "in_exploitdb": true,
-            "pfpt_aep_score": 97.61,
-            "unique_sid_observed": 1,
-            "recently_observed": true,
-            "sid_trend": "Decreasing",
-            "velocity_7d": -3.2,
-            "sid_events_7d": 512,
-            "risk_tier": "CRITICAL",
-            "last_updated": "2026-05-26T03:00:14.149932",
-            "description": "On BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."
+            "aep_score": 94.23,
+            "aep_tier": "CRITICAL",
+            "public_risk_score": 59.8,
+            "current_activity_score": 24.43,
+            "historical_persistence_score": 10.0,
+            "exploit_maturity": "Weaponized",
+            "attack_vector": "NETWORK",
+            "total_events_7d": 17063,
+            "velocity_7d": 150.96,
+            "velocity_direction": "STEEP_UP",
+            "last_updated": "2026-10-21T20:16:59.230534"
         },
         {
-            "cve": "CVE-2021-44228",
-            "cvss_score": 10.0,
-            "epss_score": 0.9436,
+            "cve": "CVE-2021-42013",
+            "description": "It was found that the fix for CVE-2021-41773 in Apache HTTP Server 2.4.50 was insufficient. An attacker could use a path traversal attack to map URLs to files outside the directories configured by Alias-like directives.",
+            "cvss_score": 9.8,
+            "epss_score": 0.9996,
             "in_cisa_kev": true,
+            "kev_ransomware_use": true,
             "in_metasploit": true,
             "in_exploitdb": true,
-            "pfpt_aep_score": 94.33,
-            "unique_sid_observed": 26,
-            "recently_observed": true,
-            "sid_trend": "Increasing",
-            "velocity_7d": 12.5,
-            "sid_events_7d": 3842,
-            "risk_tier": "CRITICAL",
-            "last_updated": "2026-05-26T03:00:14.149932",
-            "description": "Apache Log4j2 2.0-beta9 through 2.15.0 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints."
+            "aep_score": 93.24,
+            "aep_tier": "CRITICAL",
+            "public_risk_score": 59.8,
+            "current_activity_score": 23.44,
+            "historical_persistence_score": 10.0,
+            "exploit_maturity": "Weaponized",
+            "attack_vector": "NETWORK",
+            "total_events_7d": 101167,
+            "velocity_7d": 12.03,
+            "velocity_direction": "UP",
+            "last_updated": "2026-10-21T20:16:59.230534"
         }
     ]
 }
 ```
 
-This endpoint returns the top N CVEs ranked by Proofpoint AEP score, ordered highest to lowest. Only CVEs with a computed AEP score are included.
+This endpoint returns the top N CVEs ranked by AEP score, highest first. Each item has the same fields as [Get AEP Score for a CVE](#get-aep-score-for-a-cve).
 
 ### HTTP Request
 
 `GET https://insights-api.emergingthreats.net/v2/cve/top-aed?limit={limit}`
-
 
 ### Query Parameters
 
@@ -392,27 +442,7 @@ Parameter | Default | Description
 --------- | ------- | -----------
 limit | 50 | Number of CVEs to return (min: 1, max: 1000).
 
-### Response Parameters
-
-Parameter | Optional? | Description
---------- | --------- | -----------
-cve | No | The vulnerability identification number.
-cvss_score | No | CVSS base score (0.0–10.0).
-epss_score | No | EPSS probability score (0.0–1.0).
-in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
-in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
-in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
-pfpt_aep_score | No | Proofpoint AEP composite score (0–100).
-unique_sid_observed | No | Number of unique Suricata SIDs associated with this CVE.
-recently_observed | No | Whether exploit activity was observed in the last 7 days.
-sid_trend | No | Directional trend of SID event volume. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
-velocity_7d | No | Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.
-sid_events_7d | No | Total number of SID events observed for this CVE in the last 7 days.
-risk_tier | No | Risk classification. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
-last_updated | No | Timestamp of the last score computation (ISO 8601).
-description | No | Human-readable description of the vulnerability.
-
-## Get CVEs by Risk Tier
+## Get CVEs by AEP Tier
 
 ```shell
 curl "https://insights-api.emergingthreats.net/v2/cve/tier/CRITICAL?page=0&size=50" \
@@ -433,40 +463,44 @@ print(response.json())
 ```json
 {
     "success": true,
-    "timestamp": "2026-05-26T20:42:50.286752996",
+    "timestamp": "2026-10-21T16:55:40.402911",
     "response": {
         "content": [
             {
-                "cve": "CVE-2020-5902",
+                "cve": "CVE-2018-13379",
+                "description": "An Improper Limitation of a Pathname to a Restricted Directory in Fortinet FortiOS 6.0.0 to 6.0.4, 5.6.3 to 5.6.7 and 5.4.6 to 5.4.12 under SSL VPN web portal allows an unauthenticated attacker to download system files via special crafted HTTP resource requests.",
                 "cvss_score": 9.8,
-                "epss_score": 0.9443,
+                "epss_score": 1.0,
                 "in_cisa_kev": true,
+                "kev_ransomware_use": true,
                 "in_metasploit": true,
                 "in_exploitdb": true,
-                "pfpt_aep_score": 97.61,
-                "unique_sid_observed": 1,
-                "recently_observed": true,
-                "sid_trend": "Decreasing",
-                "velocity_7d": -3.2,
-                "sid_events_7d": 512,
-                "risk_tier": "CRITICAL",
-                "last_updated": "2026-05-26T03:00:14.149932",
-                "description": "On BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."
+                "aep_score": 94.23,
+                "aep_tier": "CRITICAL",
+                "public_risk_score": 59.8,
+                "current_activity_score": 24.43,
+                "historical_persistence_score": 10.0,
+                "exploit_maturity": "Weaponized",
+                "attack_vector": "NETWORK",
+                "total_events_7d": 17063,
+                "velocity_7d": 150.96,
+                "velocity_direction": "STEEP_UP",
+                "last_updated": "2026-10-21T20:16:59.230534"
             }
         ],
-        "totalElements": 73,
-        "totalPages": 2,
+        "totalElements": 20,
+        "totalPages": 1,
         "size": 50,
         "number": 0,
         "first": true,
-        "last": false,
-        "numberOfElements": 50,
+        "last": true,
+        "numberOfElements": 20,
         "empty": false
     }
 }
 ```
 
-This endpoint returns a paginated list of CVEs filtered by AEP risk tier. Use this to retrieve all CVEs in a given risk band for bulk triage or dashboard population.
+This endpoint returns a paginated list of CVEs in one AEP tier, highest score first. Use it to pull every CVE in a tier for bulk triage or dashboards. Each item in `content` has the same fields as [Get AEP Score for a CVE](#get-aep-score-for-a-cve).
 
 ### HTTP Request
 
@@ -476,7 +510,7 @@ This endpoint returns a paginated list of CVEs filtered by AEP risk tier. Use th
 
 Parameter | Description
 --------- | -----------
-tier | Risk tier to filter by. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
+tier | AEP tier to filter by, case-insensitive. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`. See [AEP tiers](#aep-tiers).
 
 ### Query Parameters
 
@@ -490,24 +524,11 @@ size | 50 | Page size (min: 1, max: 1000).
 Parameter | Optional? | Description
 --------- | --------- | -----------
 content | No | Array of CVE score objects for the requested page.
-cve | No | The vulnerability identification number.
-cvss_score | No | CVSS base score (0.0–10.0).
-epss_score | No | EPSS probability score (0.0–1.0).
-in_cisa_kev | No | Whether the CVE is listed in CISA's Known Exploited Vulnerabilities catalog.
-in_metasploit | No | Whether a Metasploit exploit module exists for this CVE.
-in_exploitdb | No | Whether an ExploitDB entry exists for this CVE.
-pfpt_aep_score | No | Proofpoint AEP composite score (0–100).
-unique_sid_observed | No | Number of unique Suricata SIDs associated with this CVE.
-recently_observed | No | Whether exploit activity was observed in the last 7 days.
-sid_trend | No | Directional trend of SID event volume. Values: `Increasing`, `Decreasing`, `Stable`, `None`.
-velocity_7d | No | Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.
-sid_events_7d | No | Total number of SID events observed for this CVE in the last 7 days.
-risk_tier | No | Risk classification. Values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
-last_updated | No | Timestamp of the last score computation (ISO 8601).
-description | No | Human-readable description of the vulnerability.
 totalElements | No | Total number of CVEs in this tier.
 totalPages | No | Total number of pages at the requested page size.
 size | No | Page size used for this response.
 number | No | Current page number (zero-indexed).
 first | No | Whether this is the first page.
 last | No | Whether this is the last page.
+numberOfElements | No | Number of CVEs in this page.
+empty | No | Whether this page has no CVEs.
