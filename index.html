@@ -338,13 +338,19 @@
             <a href="#active-exploits-protection" class="toc-h1 toc-link" data-title="Active Exploits Protection">Active Exploits Protection</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#aep-tiers" class="toc-h2 toc-link" data-title="AEP tiers">AEP tiers</a>
+                  </li>
+                  <li>
+                    <a href="#velocity" class="toc-h2 toc-link" data-title="Velocity">Velocity</a>
+                  </li>
+                  <li>
                     <a href="#get-aep-score-for-a-cve" class="toc-h2 toc-link" data-title="Get AEP Score for a CVE">Get AEP Score for a CVE</a>
                   </li>
                   <li>
                     <a href="#get-top-cves-by-aep-score" class="toc-h2 toc-link" data-title="Get Top CVEs by AEP Score">Get Top CVEs by AEP Score</a>
                   </li>
                   <li>
-                    <a href="#get-cves-by-risk-tier" class="toc-h2 toc-link" data-title="Get CVEs by Risk Tier">Get CVEs by Risk Tier</a>
+                    <a href="#get-cves-by-aep-tier" class="toc-h2 toc-link" data-title="Get CVEs by AEP Tier">Get CVEs by AEP Tier</a>
                   </li>
               </ul>
           </li>
@@ -1038,7 +1044,99 @@ You must replace `SECRETKEY` with your personal API key.
 
 <p>This endpoint the highest volume exploit growth week over week targeting CVEs.  You can change the query from 5 to 10 if desired.</p>
 <h1 id='active-exploits-protection'>Active Exploits Protection</h1>
-<p>Active Exploits Protection (AEP) provides CVE risk scoring based on real-world exploit activity observed across Proofpoint&#39;s sensor network. AEP combines CVSS severity, EPSS probability, CISA KEV status, Metasploit/ExploitDB availability, and SID-based detection signals into a single composite score with directional trend and risk tier classification.</p>
+<p>Active Exploits Protection (AEP) scores CVEs by how likely they are to be exploited against you right now. Each score runs from 0 to 100 and combines three parts:</p>
+
+<table><thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+<th>What it measures</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Public risk</td>
+<td>0 to 60</td>
+<td>CVSS severity, EPSS probability, CISA KEV listing, known ransomware use, and exploit maturity.</td>
+</tr>
+<tr>
+<td>Current activity</td>
+<td>0 to 30</td>
+<td>Exploit activity Proofpoint observed in the last 7 days across network sensors and email.</td>
+</tr>
+<tr>
+<td>Historical persistence</td>
+<td>0 to 10</td>
+<td>How long and how consistently the CVE has been exploited over the last 26 weeks, weighted toward recent activity.</td>
+</tr>
+</tbody></table>
+
+<p>Scores are recomputed daily.</p>
+<h3 id='aep-tiers'>AEP tiers</h3>
+<table><thead>
+<tr>
+<th>Tier</th>
+<th>AEP score</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>CRITICAL</code></td>
+<td>85 and above</td>
+</tr>
+<tr>
+<td><code>HIGH</code></td>
+<td>70 to below 85</td>
+</tr>
+<tr>
+<td><code>MEDIUM</code></td>
+<td>50 to below 70</td>
+</tr>
+<tr>
+<td><code>LOW</code></td>
+<td>Below 50</td>
+</tr>
+</tbody></table>
+<h3 id='velocity'>Velocity</h3>
+<p><code>velocity_7d</code> is the percent change in total events (network plus email) over the last 7 days compared with the 7 days before. <code>velocity_direction</code> groups that change so you don&#39;t have to apply your own thresholds:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>STEEP_UP</code></td>
+<td>Up 50% or more.</td>
+</tr>
+<tr>
+<td><code>UP</code></td>
+<td>Up 10% to 50%.</td>
+</tr>
+<tr>
+<td><code>FLAT</code></td>
+<td>Within 10% either way.</td>
+</tr>
+<tr>
+<td><code>DOWN</code></td>
+<td>Down 10% to 50%.</td>
+</tr>
+<tr>
+<td><code>STEEP_DOWN</code></td>
+<td>Down 50% or more.</td>
+</tr>
+<tr>
+<td><code>NEW</code></td>
+<td>Activity this week and none the week before. <code>velocity_7d</code> is <code>null</code> because there&#39;s no baseline.</td>
+</tr>
+<tr>
+<td><code>NONE</code></td>
+<td>No activity in either week. <code>velocity_7d</code> is <code>null</code>.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+AEP v4.7 renamed several response fields. If you integrated with an earlier version, update these names: <code>pfpt_aep_score</code> is now <code>aep_score</code>, <code>risk_tier</code> is now <code>aep_tier</code>, <code>sid_events_7d</code> is now <code>total_events_7d</code> (network plus email), and <code>sid_trend</code> is replaced by <code>velocity_direction</code>. <code>unique_sid_observed</code> and <code>recently_observed</code> were removed; use <code>total_events_7d &gt; 0</code> in place of <code>recently_observed</code>.
+</aside>
 <h2 id='get-aep-score-for-a-cve'>Get AEP Score for a CVE</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://insights-api.emergingthreats.net/v2/cve/{CVE}/score"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: SECRETKEY"</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -1053,27 +1151,31 @@ You must replace `SECRETKEY` with your personal API key.
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T20:40:39.823348124"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-21T16:54:27.18174"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-44228"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apache Log4j2 2.0-beta9 through 2.15.0 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints."</span><span class="p">,</span><span class="w">
         </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9436</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">
         </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"kev_ransomware_use"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
         </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
         </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"pfpt_aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">94.33</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Increasing"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">12.5</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"sid_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">3842</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"In BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."</span><span class="w">
+        </span><span class="nl">"aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">92.17</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"aep_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"public_risk_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">60.0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"current_activity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">22.17</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"historical_persistence_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"exploit_maturity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weaponized"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"attack_vector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NETWORK+EMAIL"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"total_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">702381</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">53.78</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"velocity_direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STEEP_UP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-21T20:16:59.230534"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint returns the Proofpoint AEP (Active Exploits Protection) score and associated metadata for a specific CVE.</p>
+<p>This endpoint returns the AEP score, tier, component scores and 7-day activity for a specific CVE.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>GET https://insights-api.emergingthreats.net/v2/cve/{cve}/score</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
@@ -1102,74 +1204,94 @@ You must replace `SECRETKEY` with your personal API key.
 <td>The vulnerability identification number.</td>
 </tr>
 <tr>
+<td>description</td>
+<td>Yes</td>
+<td>Human-readable description of the vulnerability.</td>
+</tr>
+<tr>
 <td>cvss_score</td>
-<td>No</td>
-<td>CVSS base score (0.0–10.0).</td>
+<td>Yes</td>
+<td>CVSS base score (0.0 to 10.0).</td>
 </tr>
 <tr>
 <td>epss_score</td>
-<td>No</td>
-<td>EPSS probability score (0.0–1.0) estimating likelihood of exploitation in the wild.</td>
+<td>Yes</td>
+<td>EPSS probability (0.0 to 1.0) that the CVE will be exploited in the wild.</td>
 </tr>
 <tr>
 <td>in_cisa_kev</td>
-<td>No</td>
+<td>Yes</td>
 <td>Whether the CVE is listed in CISA&#39;s Known Exploited Vulnerabilities catalog.</td>
 </tr>
 <tr>
+<td>kev_ransomware_use</td>
+<td>Yes</td>
+<td>Whether CISA reports the CVE as used in ransomware campaigns.</td>
+</tr>
+<tr>
 <td>in_metasploit</td>
-<td>No</td>
+<td>Yes</td>
 <td>Whether a Metasploit exploit module exists for this CVE.</td>
 </tr>
 <tr>
 <td>in_exploitdb</td>
-<td>No</td>
+<td>Yes</td>
 <td>Whether an ExploitDB entry exists for this CVE.</td>
 </tr>
 <tr>
-<td>pfpt_aep_score</td>
+<td>aep_score</td>
 <td>No</td>
-<td>Proofpoint AEP composite score (0–100) reflecting observed exploit severity and activity.</td>
+<td>AEP score (0 to 100). The sum of the three component scores.</td>
 </tr>
 <tr>
-<td>unique_sid_observed</td>
+<td>aep_tier</td>
 <td>No</td>
-<td>Number of unique Suricata SIDs (detection rules) associated with this CVE.</td>
+<td>Tier for <code>aep_score</code>. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>. See <a href="#aep-tiers">AEP tiers</a>.</td>
 </tr>
 <tr>
-<td>recently_observed</td>
+<td>public_risk_score</td>
 <td>No</td>
-<td>Whether exploit activity for this CVE was observed by Proofpoint in the last 7 days.</td>
+<td>Public risk component (0 to 60).</td>
 </tr>
 <tr>
-<td>sid_trend</td>
+<td>current_activity_score</td>
 <td>No</td>
-<td>Directional trend of SID event volume over the last 7 days. Values: <code>Increasing</code>, <code>Decreasing</code>, <code>Stable</code>, <code>None</code>.</td>
+<td>Current activity component (0 to 30).</td>
+</tr>
+<tr>
+<td>historical_persistence_score</td>
+<td>No</td>
+<td>Historical persistence component (0 to 10).</td>
+</tr>
+<tr>
+<td>exploit_maturity</td>
+<td>No</td>
+<td>How mature the available exploits are. <code>Weaponized</code>: a Metasploit module exists, or Proofpoint sees widespread exploitation. <code>Reliable</code>: a public ExploitDB exploit exists. <code>Corroborated</code>: no public exploit, but Proofpoint has seen it exploited in email. <code>None</code>: no exploit evidence.</td>
+</tr>
+<tr>
+<td>attack_vector</td>
+<td>Yes</td>
+<td>Where Proofpoint observed exploitation in the last 7 days. Values: <code>NETWORK</code>, <code>EMAIL</code>, <code>NETWORK+EMAIL</code>. <code>null</code> when nothing was observed.</td>
+</tr>
+<tr>
+<td>total_events_7d</td>
+<td>No</td>
+<td>Exploit events Proofpoint observed for this CVE in the last 7 days, network plus email.</td>
 </tr>
 <tr>
 <td>velocity_7d</td>
-<td>No</td>
-<td>Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.</td>
+<td>Yes</td>
+<td>Percent change in <code>total_events_7d</code> compared with the prior 7 days. <code>null</code> when the prior 7 days had no events. See <a href="#velocity">Velocity</a>.</td>
 </tr>
 <tr>
-<td>sid_events_7d</td>
+<td>velocity_direction</td>
 <td>No</td>
-<td>Total number of SID events observed for this CVE in the last 7 days.</td>
-</tr>
-<tr>
-<td>risk_tier</td>
-<td>No</td>
-<td>Risk classification based on AEP score. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
+<td>Direction of the 7-day change. Values: <code>STEEP_UP</code>, <code>UP</code>, <code>FLAT</code>, <code>DOWN</code>, <code>STEEP_DOWN</code>, <code>NEW</code>, <code>NONE</code>.</td>
 </tr>
 <tr>
 <td>last_updated</td>
 <td>No</td>
-<td>Timestamp of the last score computation (ISO 8601).</td>
-</tr>
-<tr>
-<td>description</td>
-<td>No</td>
-<td>Human-readable description of the vulnerability.</td>
+<td>Timestamp of the last score computation (ISO 8601, UTC).</td>
 </tr>
 </tbody></table>
 <h2 id='get-top-cves-by-aep-score'>Get Top CVEs by AEP Score</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://insights-api.emergingthreats.net/v2/cve/top-aed?limit=10"</span> <span class="se">\</span>
@@ -1186,46 +1308,54 @@ You must replace `SECRETKEY` with your personal API key.
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T20:41:12.443219873"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-21T16:55:02.118273"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2020-5902"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2018-13379"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An Improper Limitation of a Pathname to a Restricted Directory in Fortinet FortiOS 6.0.0 to 6.0.4, 5.6.3 to 5.6.7 and 5.4.6 to 5.4.12 under SSL VPN web portal allows an unauthenticated attacker to download system files via special crafted HTTP resource requests."</span><span class="p">,</span><span class="w">
             </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.8</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9443</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">
             </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"kev_ransomware_use"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
             </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
             </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"pfpt_aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">97.61</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Decreasing"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">-3.2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"sid_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."</span><span class="w">
+            </span><span class="nl">"aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">94.23</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aep_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"public_risk_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">59.8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"current_activity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">24.43</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"historical_persistence_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"exploit_maturity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weaponized"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"attack_vector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NETWORK"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"total_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">17063</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">150.96</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"velocity_direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STEEP_UP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-21T20:16:59.230534"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-44228"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9436</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2021-42013"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"It was found that the fix for CVE-2021-41773 in Apache HTTP Server 2.4.50 was insufficient. An attacker could use a path traversal attack to map URLs to files outside the directories configured by Alias-like directives."</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9996</span><span class="p">,</span><span class="w">
             </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"kev_ransomware_use"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
             </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
             </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"pfpt_aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">94.33</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Increasing"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">12.5</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"sid_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">3842</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apache Log4j2 2.0-beta9 through 2.15.0 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints."</span><span class="w">
+            </span><span class="nl">"aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">93.24</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"aep_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"public_risk_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">59.8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"current_activity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">23.44</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"historical_persistence_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"exploit_maturity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weaponized"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"attack_vector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NETWORK"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"total_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">101167</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">12.03</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"velocity_direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-21T20:16:59.230534"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint returns the top N CVEs ranked by Proofpoint AEP score, ordered highest to lowest. Only CVEs with a computed AEP score are included.</p>
+<p>This endpoint returns the top N CVEs ranked by AEP score, highest first. Each item has the same fields as <a href="#get-aep-score-for-a-cve">Get AEP Score for a CVE</a>.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET https://insights-api.emergingthreats.net/v2/cve/top-aed?limit={limit}</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
@@ -1242,91 +1372,7 @@ You must replace `SECRETKEY` with your personal API key.
 <td>Number of CVEs to return (min: 1, max: 1000).</td>
 </tr>
 </tbody></table>
-<h3 id='response-parameters-4'>Response Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Optional?</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>cve</td>
-<td>No</td>
-<td>The vulnerability identification number.</td>
-</tr>
-<tr>
-<td>cvss_score</td>
-<td>No</td>
-<td>CVSS base score (0.0–10.0).</td>
-</tr>
-<tr>
-<td>epss_score</td>
-<td>No</td>
-<td>EPSS probability score (0.0–1.0).</td>
-</tr>
-<tr>
-<td>in_cisa_kev</td>
-<td>No</td>
-<td>Whether the CVE is listed in CISA&#39;s Known Exploited Vulnerabilities catalog.</td>
-</tr>
-<tr>
-<td>in_metasploit</td>
-<td>No</td>
-<td>Whether a Metasploit exploit module exists for this CVE.</td>
-</tr>
-<tr>
-<td>in_exploitdb</td>
-<td>No</td>
-<td>Whether an ExploitDB entry exists for this CVE.</td>
-</tr>
-<tr>
-<td>pfpt_aep_score</td>
-<td>No</td>
-<td>Proofpoint AEP composite score (0–100).</td>
-</tr>
-<tr>
-<td>unique_sid_observed</td>
-<td>No</td>
-<td>Number of unique Suricata SIDs associated with this CVE.</td>
-</tr>
-<tr>
-<td>recently_observed</td>
-<td>No</td>
-<td>Whether exploit activity was observed in the last 7 days.</td>
-</tr>
-<tr>
-<td>sid_trend</td>
-<td>No</td>
-<td>Directional trend of SID event volume. Values: <code>Increasing</code>, <code>Decreasing</code>, <code>Stable</code>, <code>None</code>.</td>
-</tr>
-<tr>
-<td>velocity_7d</td>
-<td>No</td>
-<td>Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.</td>
-</tr>
-<tr>
-<td>sid_events_7d</td>
-<td>No</td>
-<td>Total number of SID events observed for this CVE in the last 7 days.</td>
-</tr>
-<tr>
-<td>risk_tier</td>
-<td>No</td>
-<td>Risk classification. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
-</tr>
-<tr>
-<td>last_updated</td>
-<td>No</td>
-<td>Timestamp of the last score computation (ISO 8601).</td>
-</tr>
-<tr>
-<td>description</td>
-<td>No</td>
-<td>Human-readable description of the vulnerability.</td>
-</tr>
-</tbody></table>
-<h2 id='get-cves-by-risk-tier'>Get CVEs by Risk Tier</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://insights-api.emergingthreats.net/v2/cve/tier/CRITICAL?page=0&amp;size=50"</span> <span class="se">\</span>
+<h2 id='get-cves-by-aep-tier'>Get CVEs by AEP Tier</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://insights-api.emergingthreats.net/v2/cve/tier/CRITICAL?page=0&amp;size=50"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: SECRETKEY"</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">api_key</span> <span class="o">=</span> <span class="s">"SECRETKEY"</span>
@@ -1340,39 +1386,43 @@ You must replace `SECRETKEY` with your personal API key.
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T20:42:50.286752996"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-21T16:55:40.402911"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2020-5902"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"cve"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CVE-2018-13379"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An Improper Limitation of a Pathname to a Restricted Directory in Fortinet FortiOS 6.0.0 to 6.0.4, 5.6.3 to 5.6.7 and 5.4.6 to 5.4.12 under SSL VPN web portal allows an unauthenticated attacker to download system files via special crafted HTTP resource requests."</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"cvss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.8</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9443</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"epss_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"in_cisa_kev"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"kev_ransomware_use"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"in_metasploit"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"in_exploitdb"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"pfpt_aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">97.61</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"unique_sid_observed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"recently_observed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"sid_trend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Decreasing"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">-3.2</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"sid_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"risk_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-05-26T03:00:14.149932"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"On BIG-IP versions 15.0.0-15.1.0.3, 14.1.0-14.1.2.5, 13.1.0-13.1.3.3, 12.1.0-12.1.5.1, and 11.6.1-11.6.5.1, the Traffic Management User Interface (TMUI), also referred to as the Configuration utility, has a Remote Code Execution (RCE) vulnerability in undisclosed pages."</span><span class="w">
+                </span><span class="nl">"aep_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">94.23</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"aep_tier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRITICAL"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"public_risk_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">59.8</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"current_activity_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">24.43</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"historical_persistence_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"exploit_maturity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weaponized"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"attack_vector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NETWORK"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"total_events_7d"</span><span class="p">:</span><span class="w"> </span><span class="mi">17063</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"velocity_7d"</span><span class="p">:</span><span class="w"> </span><span class="mf">150.96</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"velocity_direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STEEP_UP"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"last_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-21T20:16:59.230534"</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">],</span><span class="w">
-        </span><span class="nl">"totalElements"</span><span class="p">:</span><span class="w"> </span><span class="mi">73</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"totalPages"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalElements"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalPages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
         </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="nl">"first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"numberOfElements"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"numberOfElements"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
         </span><span class="nl">"empty"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint returns a paginated list of CVEs filtered by AEP risk tier. Use this to retrieve all CVEs in a given risk band for bulk triage or dashboard population.</p>
+<p>This endpoint returns a paginated list of CVEs in one AEP tier, highest score first. Use it to pull every CVE in a tier for bulk triage or dashboards. Each item in <code>content</code> has the same fields as <a href="#get-aep-score-for-a-cve">Get AEP Score for a CVE</a>.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET https://insights-api.emergingthreats.net/v2/cve/tier/{tier}?page={page}&amp;size={size}</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
@@ -1384,7 +1434,7 @@ You must replace `SECRETKEY` with your personal API key.
 </thead><tbody>
 <tr>
 <td>tier</td>
-<td>Risk tier to filter by. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
+<td>AEP tier to filter by, case-insensitive. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>. See <a href="#aep-tiers">AEP tiers</a>.</td>
 </tr>
 </tbody></table>
 <h3 id='query-parameters-2'>Query Parameters</h3>
@@ -1406,7 +1456,7 @@ You must replace `SECRETKEY` with your personal API key.
 <td>Page size (min: 1, max: 1000).</td>
 </tr>
 </tbody></table>
-<h3 id='response-parameters-5'>Response Parameters</h3>
+<h3 id='response-parameters-4'>Response Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1418,81 +1468,6 @@ You must replace `SECRETKEY` with your personal API key.
 <td>content</td>
 <td>No</td>
 <td>Array of CVE score objects for the requested page.</td>
-</tr>
-<tr>
-<td>cve</td>
-<td>No</td>
-<td>The vulnerability identification number.</td>
-</tr>
-<tr>
-<td>cvss_score</td>
-<td>No</td>
-<td>CVSS base score (0.0–10.0).</td>
-</tr>
-<tr>
-<td>epss_score</td>
-<td>No</td>
-<td>EPSS probability score (0.0–1.0).</td>
-</tr>
-<tr>
-<td>in_cisa_kev</td>
-<td>No</td>
-<td>Whether the CVE is listed in CISA&#39;s Known Exploited Vulnerabilities catalog.</td>
-</tr>
-<tr>
-<td>in_metasploit</td>
-<td>No</td>
-<td>Whether a Metasploit exploit module exists for this CVE.</td>
-</tr>
-<tr>
-<td>in_exploitdb</td>
-<td>No</td>
-<td>Whether an ExploitDB entry exists for this CVE.</td>
-</tr>
-<tr>
-<td>pfpt_aep_score</td>
-<td>No</td>
-<td>Proofpoint AEP composite score (0–100).</td>
-</tr>
-<tr>
-<td>unique_sid_observed</td>
-<td>No</td>
-<td>Number of unique Suricata SIDs associated with this CVE.</td>
-</tr>
-<tr>
-<td>recently_observed</td>
-<td>No</td>
-<td>Whether exploit activity was observed in the last 7 days.</td>
-</tr>
-<tr>
-<td>sid_trend</td>
-<td>No</td>
-<td>Directional trend of SID event volume. Values: <code>Increasing</code>, <code>Decreasing</code>, <code>Stable</code>, <code>None</code>.</td>
-</tr>
-<tr>
-<td>velocity_7d</td>
-<td>No</td>
-<td>Raw numeric velocity of SID event volume change over the last 7 days. Positive values indicate increasing activity; negative values indicate decreasing activity.</td>
-</tr>
-<tr>
-<td>sid_events_7d</td>
-<td>No</td>
-<td>Total number of SID events observed for this CVE in the last 7 days.</td>
-</tr>
-<tr>
-<td>risk_tier</td>
-<td>No</td>
-<td>Risk classification. Values: <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, <code>LOW</code>.</td>
-</tr>
-<tr>
-<td>last_updated</td>
-<td>No</td>
-<td>Timestamp of the last score computation (ISO 8601).</td>
-</tr>
-<tr>
-<td>description</td>
-<td>No</td>
-<td>Human-readable description of the vulnerability.</td>
 </tr>
 <tr>
 <td>totalElements</td>
@@ -1523,6 +1498,16 @@ You must replace `SECRETKEY` with your personal API key.
 <td>last</td>
 <td>No</td>
 <td>Whether this is the last page.</td>
+</tr>
+<tr>
+<td>numberOfElements</td>
+<td>No</td>
+<td>Number of CVEs in this page.</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>No</td>
+<td>Whether this page has no CVEs.</td>
 </tr>
 </tbody></table>
 <h1 id='domain-information'>Domain Information</h1><h2 id='get-current-domain-reputation'>Get current domain reputation</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.emergingthreats.net/v1/domains/{domain}/reputation"</span>
